@@ -1,6 +1,7 @@
 declare interface Window {
   ethereum?: import('ethers').providers.ExternalProvider & {
     chainId: string
+    on: (event: string, callback: (...args: any[]) => void) => void
   }
 }
 
