@@ -59,6 +59,11 @@ export default defineConfig({
         'src/store',
       ],
       vueTemplate: true,
+      eslintrc: {
+        enabled: true, // Default `false`
+        filepath: './.eslintrc-auto-import.json', // Default `./.eslintrc-auto-import.json`
+        globalsPropValue: true, // Default `true`, (true | false | 'readonly' | 'readable' | 'writable' | 'writeable')
+      },
     }),
 
     // https://github.com/antfu/unplugin-vue-components
