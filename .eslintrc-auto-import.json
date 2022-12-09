@@ -254,6 +254,7 @@
     "useVibrate": true,
     "useVirtualList": true,
     "useWakeLock": true,
+    "useWeb3Store": true,
     "useWebNotification": true,
     "useWebSocket": true,
     "useWebWorker": true,
