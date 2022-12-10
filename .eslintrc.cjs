@@ -25,8 +25,7 @@ module.exports = {
   ],
   rules: {
     // override/add rules settings here, such as:
-    'no-undef': 'off',  // Disable warnings for google maps library
-    'vue/no-unused-vars': 'warn',
+    'vue/no-unused-vars': 'off',
     'vue/multi-word-component-names': 'off',
     'vue/object-curly-spacing': [2, 'always'],
     'vue/html-closing-bracket-spacing': [
@@ -35,6 +34,8 @@ module.exports = {
         selfClosingTag: 'always',
       },
     ],
+    // "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "warn"
     // 'vue/max-attributes-per-line': [
     //   2,
     //   {

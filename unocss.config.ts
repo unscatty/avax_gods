@@ -69,8 +69,8 @@ export default defineConfig({
       'btn': 'px-4 py-2 rounded-lg bg-siteViolet w-fit text-white font-rajdhani font-bold',
 
       // custom input component
-      'label': 'font-rajdhani font-semibold text-2xl text-white mb-3',
-      'input': 'bg-siteDimBlack text-white outline-none focus:outline-siteViolet p-4 rounded-md sm:max-w-[50%] max-w-full',
+      'form-label': 'font-rajdhani font-semibold text-2xl text-white mb-3',
+      'form-input': 'bg-siteDimBlack text-white outline-none focus:outline-siteViolet p-4 rounded-md sm:max-w-[50%] max-w-full',
 
       // gameload component
       'game-load-container': 'absolute inset-0 z-10 w-full h-screen gameload flex-col',

@@ -9,9 +9,9 @@ export const useWeb3Store = defineStore('web3', () => {
   const avaxContract = ref<AVAXGods>()
 
   const updateCurrentWalletAddress = async () => {
-    const accounts = await window.ethereum?.request!({
-      method: 'eth_accounts'
-    }) as string[]
+    const accounts = (await window.ethereum?.request!({
+      method: 'eth_accounts',
+    })) as string[]
 
     if (accounts) {
       console.debug(accounts)
@@ -24,7 +24,10 @@ export const useWeb3Store = defineStore('web3', () => {
     const connection = await web3modal.connect()
     const newProvider = new ethers.providers.Web3Provider(connection)
     const signer = newProvider.getSigner()
-    const avaxGodsContract = AVAXGods__factory.connect(import.meta.env.VITE_AVAX_CONTRACT_ADDRESS, signer)
+    const avaxGodsContract = AVAXGods__factory.connect(
+      import.meta.env.VITE_AVAX_CONTRACT_ADDRESS,
+      signer
+    )
 
     // await avaxGodsContract.deployed()
 
@@ -36,14 +39,16 @@ export const useWeb3Store = defineStore('web3', () => {
     await setSmartContractAndProvider()
 
     await updateCurrentWalletAddress()
-    
+
     window.ethereum?.on('accountsChanged', updateCurrentWalletAddress)
   })
 
   return {
+    avaxContract,
+    provider,
     walletAddress,
     updateCurrentWalletAddress,
-    setSmartContractAndProvider
+    setSmartContractAndProvider,
   }
 })
 
