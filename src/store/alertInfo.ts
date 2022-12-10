@@ -1,23 +1,29 @@
-export const useAlertInfo = () => {
+import { acceptHMRUpdate, defineStore } from 'pinia'
+import { useState } from '~/composables/state'
+
+export const useAlertInfoStore = defineStore('alertInfo', () => {
   const [alertInfo, setAlertInfo] = useState({
     status: false,
     type: 'info',
-    message: ''
+    message: '',
   })
 
   watch(alertInfo, () => {
     if (alertInfo.value.status) {
       const timer = setTimeout(() => {
-        // Clear aler info
+        // Clear alert info
         setAlertInfo({ status: false, type: 'info', message: '' })
-        
+
         clearTimeout(timer)
       }, 5_000)
     }
   })
 
-  return [
+  return {
     alertInfo,
     setAlertInfo,
-  ] as [typeof alertInfo, typeof setAlertInfo]
-}
+  }
+})
+
+if (import.meta.hot)
+  import.meta.hot.accept(acceptHMRUpdate(useAlertInfoStore, import.meta.hot))

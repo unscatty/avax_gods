@@ -1,7 +1,7 @@
 import { ethers } from 'ethers'
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import Web3Modal from 'web3modal'
-import { AVAXGods, AVAXGods__factory } from '../contract/types'
+import { AVAXGods, AVAXGods__factory } from '~/contract/types'
 
 export const useWeb3Store = defineStore('web3', () => {
   const walletAddress = ref('')
@@ -14,7 +14,6 @@ export const useWeb3Store = defineStore('web3', () => {
     })) as string[]
 
     if (accounts) {
-      console.debug(accounts)
       walletAddress.value = accounts[0]
     }
   }
@@ -29,18 +28,22 @@ export const useWeb3Store = defineStore('web3', () => {
       signer
     )
 
-    // await avaxGodsContract.deployed()
+    await avaxGodsContract.deployed()
 
     provider.value = newProvider
     avaxContract.value = avaxGodsContract
   }
 
   onMounted(async () => {
-    await setSmartContractAndProvider()
+    try {
+      await setSmartContractAndProvider()
 
-    await updateCurrentWalletAddress()
+      await updateCurrentWalletAddress()
 
-    window.ethereum?.on('accountsChanged', updateCurrentWalletAddress)
+      window.ethereum?.on('accountsChanged', updateCurrentWalletAddress)
+    } catch (error) {
+      console.info(error)
+    }
   })
 
   return {

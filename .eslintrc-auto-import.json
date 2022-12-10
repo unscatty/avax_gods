@@ -108,7 +108,7 @@
     "unrefElement": true,
     "until": true,
     "useActiveElement": true,
-    "useAlertInfo": true,
+    "useAlertInfoStore": true,
     "useArrayEvery": true,
     "useArrayFilter": true,
     "useArrayFind": true,

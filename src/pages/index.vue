@@ -2,7 +2,7 @@
 import { storeToRefs } from 'pinia'
 
 const { avaxContract, walletAddress } = storeToRefs(useWeb3Store())
-const [alertInfo, setAlertInfo] = useAlertInfo()
+const { setAlertInfo } = useAlertInfoStore()
 
 const [playerName, setPlayerName] = useState('')
 
@@ -20,10 +20,12 @@ const handleClick = async () => {
       setAlertInfo({
         status: true,
         type: 'info',
-        message: `${playerName} is being summoned!`,
+        message: `${playerName.value} is being summoned!`,
       })
     }
   } catch (error: any) {
+    console.info(error)
+
     setAlertInfo({
       status: true,
       type: 'failure',

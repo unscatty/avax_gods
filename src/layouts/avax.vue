@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia';
+
 const router = useRouter()
 const meta = computed(() => router.currentRoute.value.meta)
 
@@ -10,10 +12,16 @@ const defaultDescription = 'Connect your wallet to start playing the ultimate We
 
 const layoutTitle = computed(() => meta.value.layoutTitle as string[] || defaultTitle)
 const layoutDescription = computed(() => meta.value.layoutDescription as string || defaultDescription)
+
+// Alert
+const {alertInfo} = storeToRefs(useAlertInfoStore())
 </script>
 
 <template>
   <div class="hoc-container">
+    <!-- Alert compoment -->
+    <AlertInfo v-show="alertInfo.status" :type="alertInfo.type" :message="alertInfo.message" />
+    
     <div class="hoc-content-box">
       <img src="/resources/logo.svg" alt="logo" class="hoc-logo" @click="router.push('/')" />
 
