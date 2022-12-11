@@ -122,6 +122,7 @@
     "useAttrs": true,
     "useBase64": true,
     "useBattery": true,
+    "useBattleStore": true,
     "useBluetooth": true,
     "useBreakpoints": true,
     "useBroadcastChannel": true,

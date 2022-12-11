@@ -20,7 +20,7 @@ export default defineConfig({
       'head-text': 'font-rajdhani font-bold text-white sm:text-6xl text-4xl',
       'normal-text': 'font-rajdhani font-normal text-[24px] text-siteWhite',
       'footer-text': 'font-rajdhani font-medium text-base text-white',
-      'info-text': 'font-rajdhani font-medium text-lg text-siteViolet cursor-pointer',
+      'info-text': 'font-rajdhani font-medium text-lg text-siteViolet cursor-pointer my-5',
 
       // glassmorphism
       'glass-effect': 'bg-white backdrop-filter backdrop-blur-lg bg-opacity-10',
