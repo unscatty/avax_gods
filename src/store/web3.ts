@@ -1,7 +1,7 @@
 import { ethers } from 'ethers'
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import Web3Modal from 'web3modal'
-import { AVAXGods, AVAXGods__factory } from '~/contract/types'
+import { type AVAXGods, AVAXGods__factory } from '~/contract/types'
 
 export const useWeb3Store = defineStore('web3', () => {
   const walletAddress = ref('')

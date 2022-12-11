@@ -1,16 +1,37 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
+// import { createEventListeners } from '~/utils/create-event-listeners'
+// import { AVAXGods } from '../contract/types'
+const router = useRouter()
 
 const { avaxContract, walletAddress } = storeToRefs(useWeb3Store())
 const { setAlertInfo } = useAlertInfoStore()
 
 const [playerName, setPlayerName] = useState('')
 
+const playerExists = computedAsync<boolean>(async () => {
+  return avaxContract.value?.isPlayer(walletAddress.value) || false
+}, false)
+
+const playerTokenExists = computedAsync<boolean>(async () => {
+  return (await avaxContract.value?.isPlayerToken(walletAddress.value)) || false
+}, false)
+
+// watch(avaxContract, () => {
+//   createEventListeners({
+//     contract: avaxContract.value as AVAXGods,
+//     provider: provider.value!,
+//     setShowAlertInfo: setAlertInfo,
+//     walletAddress: walletAddress.value,
+//   })
+// })
+
 const handleClick = async () => {
   try {
-    const playerExists = await avaxContract.value?.isPlayer(walletAddress.value)
+    // const playerExists = await avaxContract.value?.isPlayer(walletAddress.value)
 
-    if (!playerExists) {
+    if (!playerExists.value) {
+      console.info('Creating new player...')
       // Create a new player
       await avaxContract.value?.registerPlayer(
         playerName.value,
@@ -22,6 +43,8 @@ const handleClick = async () => {
         type: 'info',
         message: `${playerName.value} is being summoned!`,
       })
+    } else {
+      console.info('Player exists ')
     }
   } catch (error: any) {
     console.info(error)
@@ -33,6 +56,35 @@ const handleClick = async () => {
     })
   }
 }
+
+const checkForPlayerToken = () => {
+  if (playerExists.value && playerTokenExists.value) {
+    setAlertInfo({
+      status: true,
+      type: 'info',
+      message: 'Redirecting...',
+    })
+
+    unwatchPlayerCreated()
+
+    router.push('/create-battle')
+  } else {
+    setAlertInfo({
+      status: true,
+      type: 'failure',
+      message: 'You must first create a player',
+    })
+  }
+}
+
+const unwatchPlayerCreated = watch(
+  [playerExists, playerTokenExists],
+  checkForPlayerToken
+)
+
+// onMounted(async () => {
+//   await checkForPlayerToken()
+// })
 </script>
 
 <template>
