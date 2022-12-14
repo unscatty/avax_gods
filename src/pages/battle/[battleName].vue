@@ -1,0 +1,92 @@
+<script setup lang="ts">
+import { storeToRefs } from 'pinia'
+import { AVAXGods } from '~/contract/types'
+
+export type PlayerData = {
+  instance: AVAXGods.PlayerStructOutput
+  attack: number
+  defense: number
+  health: number
+  mana: number
+}
+
+const router = useRouter()
+const { setAlertInfo } = useAlertInfoStore()
+const { walletAddress, avaxContract } = storeToRefs(useWeb3Store())
+const { players, activeBattle } = storeToRefs(useBattleStore())
+
+const props = defineProps<{ battleName: string }>()
+
+const battleGround = ref('bg-astral')
+const player1 = ref<PlayerData>()
+const player2 = ref<PlayerData>()
+
+const getPlayerInfo = async () => {
+  if (!activeBattle.value || !avaxContract.value) return
+
+  try {
+    let player01Address: string
+    let player02Address: string
+
+    if (
+      activeBattle.value.players[0].toLowerCase() ===
+      walletAddress.value.toLowerCase()
+    ) {
+      player01Address = activeBattle.value.players[0]
+      player02Address = activeBattle.value.players[1]
+    } else {
+      player01Address = activeBattle.value.players[1]
+      player02Address = activeBattle.value.players[0]
+    }
+
+    const p1TokenData = await avaxContract.value.getPlayerToken(player01Address)
+    const player01Instance = await avaxContract.value.getPlayer(player01Address)
+    const player02Instance = await avaxContract.value.getPlayer(player02Address)
+
+    const p1Attack = p1TokenData.attackStrength.toNumber()
+    const p1Defense = p1TokenData.defenseStrength.toNumber()
+    const p1Health = player01Instance.playerHealth.toNumber()
+    const p1Mana = player01Instance.playerMana.toNumber()
+
+    const p2Health = player02Instance.playerHealth.toNumber()
+    const p2Mana = player02Instance.playerMana.toNumber()
+
+    player1.value = {
+      instance: player01Instance,
+      attack: p1Attack,
+      defense: p1Defense,
+      health: p1Health,
+      mana: p1Mana,
+    }
+    player2.value = {
+      instance: player02Instance,
+      attack: -1,
+      defense: -1,
+      health: p2Health,
+      mana: p2Mana,
+    }
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+const unwatchChanges = watch(
+  [avaxContract, activeBattle, props.battleName],
+  getPlayerInfo
+)
+
+onUnmounted(unwatchChanges)
+</script>
+
+<template>
+  <div class="flex-betwe en game-container bg-cover" :class="battleGround">
+    <h1 class="text-xl text-white">
+      {{ battleName }}
+    </h1>
+  </div>
+</template>
+
+<route lang="yaml">
+meta:
+  layout: avax-battle
+</route>

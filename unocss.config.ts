@@ -133,20 +133,38 @@ export default defineConfig({
         'font-rajdhani font-bold text-3xl text-white mb-6 text-center',
     },
   ],
+  rules: [
+    [
+      'bg-astral',
+      { 'background-image': 'url("/resources/background/astral.jpg")' },
+    ],
+    [
+      'bg-saiman',
+      { 'background-image': 'url("/resources/background/saiman.jpg")' },
+    ],
+    [
+      'bg-eoaalien',
+      { 'background-image': 'url("/resources/background/eoaalien.jpg")' },
+    ],
+    [
+      'bg-panight',
+      { 'background-image': 'url("/resources/background/panight.jpg")' },
+    ],
+    [
+      'bg-hero-img',
+      { 'background-image': 'url("/resources/background/hero-img.jpg")' },
+    ],
+    [
+      'bg-landing',
+      { 'background-image': 'url("/resources/background/landing.jpg")' },
+    ],
+  ],
   theme: {
     colors: {
       siteBlack: '#131519',
       siteDimBlack: '#191d23',
       siteViolet: '#7f46f0',
       siteWhite: '#9eacc7',
-    },
-    backgroundImage: {
-      astral: 'url("/images/background/astral.jpg")',
-      saiman: 'url("/images/background/saiman.jpg")',
-      eoaalien: 'url("/images/background/eoaalien.jpg")',
-      panight: 'url("/images/background/panight.jpg")',
-      heroImg: 'url("/images/background/hero-img.jpg")',
-      landing: 'url("/images/background/landing.jpg")',
     },
   },
   presets: [

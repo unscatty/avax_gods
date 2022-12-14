@@ -44,5 +44,15 @@ export const createEventListeners = ({
         })
       }
     })
+
+    const newBattleEventFilter = contract.filters.NewBattle()
+    
+    addNewEvent(newBattleEventFilter, provider, ({ args }) => {
+      console.log('New battle started!', args, walletAddress)
+
+      // const player1 = args.
+
+      // if (walletAddress.toLowerCase() === args.player1.)
+    })
   }
 }

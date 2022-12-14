@@ -7,15 +7,11 @@ const { walletAddress, avaxContract } = storeToRefs(useWeb3Store())
 const { setAlertInfo } = useAlertInfoStore()
 
 // Battles that were not created by the current player
-// const availableBattles = computed(() =>
-//   pendingBattles.value.filter(
-//     (battle) => !battle.players.includes(walletAddress.value)
-//   )
-// )
-
-const availableBattles = computed(() => {
-  return pendingBattles.value
-})
+const availableBattles = computed(() =>
+  pendingBattles.value.filter(
+    (battle) => !battle.players.includes(walletAddress.value)
+  )
+)
 
 const handleClick = async (battleName: string) => {
   try {
