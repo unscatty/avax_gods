@@ -30,8 +30,8 @@ export const useWeb3Store = defineStore('web3', () => {
 
     await avaxGodsContract.deployed()
 
-    provider.value = newProvider
-    avaxContract.value = avaxGodsContract
+    provider.value = markRaw(newProvider)
+    avaxContract.value = markRaw(avaxGodsContract)
   }
 
   onMounted(async () => {
