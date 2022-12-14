@@ -5,9 +5,9 @@
   "i18n-ally.localesPaths": "locales",
   "i18n-ally.sortKeys": true,
   "prettier.enable": true,
-  "files.associations": {
-    "*.css": "postcss"
-  },
+  // "files.associations": {
+  //   "*.css": "tailwindcss"
+  // },
   "editor.formatOnSave": false,
   "typescript.tsdk": "node_modules/typescript/lib"
 }

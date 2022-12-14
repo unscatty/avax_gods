@@ -8,7 +8,7 @@ export const useAlertInfoStore = defineStore('alertInfo', () => {
     message: '',
   })
 
-  watch(alertInfo, () => {
+  const unwatchAlert = watch(alertInfo, () => {
     if (alertInfo.value.status) {
       const timer = setTimeout(() => {
         // Clear alert info
@@ -18,6 +18,8 @@ export const useAlertInfoStore = defineStore('alertInfo', () => {
       }, 5_000)
     }
   })
+
+  onUnmounted(unwatchAlert)
 
   return {
     alertInfo,

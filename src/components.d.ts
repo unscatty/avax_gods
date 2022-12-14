@@ -11,6 +11,7 @@ declare module '@vue/runtime-core' {
     AlertInfo: typeof import('./components/alert/AlertInfo.vue')['default']
     CustomButton: typeof import('./components/CustomButton.vue')['default']
     CustomInput: typeof import('./components/CustomInput.vue')['default']
+    GameLoad: typeof import('./components/GameLoad.vue')['default']
     OnBoard: typeof import('./components/OnBoard.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

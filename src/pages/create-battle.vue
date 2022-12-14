@@ -2,21 +2,35 @@
 import { storeToRefs } from 'pinia'
 
 const { avaxContract } = storeToRefs(useWeb3Store())
-const { battleName } = storeToRefs(useBattleStore())
+const { activeBattle } = storeToRefs(useBattleStore())
 const router = useRouter()
+
+const battleName = ref('')
+const isWaitingBattle = ref(false)
 
 const handleClick = async () => {
   if (!battleName.value || !battleName.value.trim()) return
 
   try {
     await avaxContract.value?.createBattle(battleName.value)
+    isWaitingBattle.value = true
+
+    // pendingBattles.fo
   } catch (error) {
     console.error(error)
   }
 }
+
+watch(activeBattle, () => {
+  if (activeBattle.value?.battleStatus === 0) {
+    isWaitingBattle.value = true
+  }
+})
 </script>
 
 <template>
+  <GameLoad v-show="isWaitingBattle" />
+
   <div class="flex flex-col mb-5">
     <CustomInput
       label="Battle"
