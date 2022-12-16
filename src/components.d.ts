@@ -18,5 +18,6 @@ declare module '@vue/runtime-core' {
     PlayerInfo: typeof import('./components/battle/PlayerInfo.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Tilt: typeof import('./components/common/Tilt.vue')['default']
   }
 }
