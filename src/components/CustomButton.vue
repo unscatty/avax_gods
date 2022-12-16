@@ -1,6 +1,6 @@
 <script setup lang="ts">
 defineProps<{
-  title: string
+  title?: string
   restStyles: string
 }>()
 
@@ -14,6 +14,10 @@ const emit = defineEmits(['handleClick'])
     :class="restStyles"
     @click="emit('handleClick')"
   >
-    {{ title }}
+    <slot>
+      <template v-if="title">
+        {{ title }}
+      </template>
+    </slot>
   </button>
 </template>

@@ -1,14 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { AVAXGods } from '~/contract/types'
-
-export type PlayerData = {
-  instance: AVAXGods.PlayerStructOutput
-  attack: number
-  defense: number
-  health: number
-  mana: number
-}
+import { PlayerData } from '~/components/battle/types/battle'
 
 const router = useRouter()
 const { setAlertInfo } = useAlertInfoStore()
@@ -18,8 +10,20 @@ const { players, activeBattle } = storeToRefs(useBattleStore())
 const props = defineProps<{ battleName: string }>()
 
 const battleGround = ref('bg-astral')
-const player1 = ref<PlayerData>()
-const player2 = ref<PlayerData>()
+const player1 = ref<PlayerData>({
+  attack: 10,
+  health: 20,
+  defense: 10,
+  mana: 5,
+  instance: {} as any,
+})
+const player2 = ref<PlayerData>({
+  attack: 10,
+  health: 25,
+  defense: 10,
+  mana: 5,
+  instance: {} as any,
+})
 
 const getPlayerInfo = async () => {
   if (!activeBattle.value || !avaxContract.value) return
@@ -70,19 +74,58 @@ const getPlayerInfo = async () => {
   }
 }
 
-const unwatchChanges = watch(
-  [avaxContract, activeBattle, props.battleName],
-  getPlayerInfo
-)
+// const unwatchChanges = watch(
+//   [avaxContract, activeBattle, props.battleName],
+//   getPlayerInfo
+// )
 
-onUnmounted(unwatchChanges)
+// onUnmounted(unwatchChanges)
 </script>
 
 <template>
-  <div class="flex-betwe en game-container bg-cover" :class="battleGround">
-    <h1 class="text-xl text-white">
+  <div class="flex-between game-container bg-cover" :class="battleGround">
+    <!-- <h1 class="text-xl text-white">
       {{ battleName }}
-    </h1>
+    </h1> -->
+
+    <PlayerInfo :player="player2" player-icon="/resources/player02.png" :mt="true" />
+
+    <div class="flex-center flex-col my-10">
+      <Card :card="player2" :title="player2?.instance.playerName" />
+
+      <div class="flex items-center flex-row">
+        <CustomButton
+          rest-styles="mr-2 hover:border-yellow-400"
+          @handle-click="() => {}"
+        >
+          <img
+            src="/resources/attack.png"
+            alt="action_img"
+            class="game-move-icon"
+          />
+        </CustomButton>
+
+        <Card
+          :card="player1"
+          :title="player1?.instance.playerName"
+          rest-styles="mt-3"
+        />
+
+        <CustomButton
+          rest-styles="ml6 hover:border-red-600"
+          @handle-click="() => {}"
+        >
+          <img
+            src="/resources/defense.png"
+            alt="action_img"
+            class="game-move-icon"
+          />
+        </CustomButton>
+      </div>
+    </div>
+
+    <PlayerInfo :player="player1" player-icon="/resources/player01.png" />
+    <GameInfo />
   </div>
 </template>
 

@@ -7,12 +7,15 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    AlertIcon: typeof import('./components/alert/AlertIcon.vue')['default']
-    AlertInfo: typeof import('./components/alert/AlertInfo.vue')['default']
+    AlertIcon: typeof import('./components/common/alert/AlertIcon.vue')['default']
+    AlertInfo: typeof import('./components/common/alert/AlertInfo.vue')['default']
+    Card: typeof import('./components/common/Card.vue')['default']
     CustomButton: typeof import('./components/CustomButton.vue')['default']
     CustomInput: typeof import('./components/CustomInput.vue')['default']
+    GameInfo: typeof import('./components/battle/GameInfo.vue')['default']
     GameLoad: typeof import('./components/GameLoad.vue')['default']
     OnBoard: typeof import('./components/OnBoard.vue')['default']
+    PlayerInfo: typeof import('./components/battle/PlayerInfo.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }
