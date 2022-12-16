@@ -45,5 +45,7 @@ const marginIndexing = (index: number) =>
     >
       {{ player?.mana || 0 }}
     </div>
+
+    <!-- TODO: player tooltips -->
   </div>
 </template>

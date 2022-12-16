@@ -56,7 +56,7 @@ export default defineConfig({
         'w-screen min-h-screen bg-cover bg-no-repeat bg-center flex-col',
       'game-move-box':
         'sm:w-20 w-14 sm:h-20 h-14 rounded-full cursor-pointer border-[2px]',
-      'game-move-icon': 'w-1/2 h-1/w-1/2 object-contain',
+      'game-move-icon': 'w-1/2 h-1/2 object-contain',
 
       // player info component
       'player-img': 'w-14 h-14 object-contain rounded-full',
