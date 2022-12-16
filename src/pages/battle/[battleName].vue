@@ -11,18 +11,22 @@ const props = defineProps<{ battleName: string }>()
 
 const battleGround = ref('bg-astral')
 const player1 = ref<PlayerData>({
-  attack: 10,
+  attack: -1,
   health: 20,
   defense: 10,
   mana: 5,
-  instance: {} as any,
+  instance: {
+    playerName: 'Player1',
+  } as any,
 })
 const player2 = ref<PlayerData>({
   attack: 10,
   health: 25,
   defense: 10,
   mana: 5,
-  instance: {} as any,
+  instance: {
+    playerName: 'Player2',
+  } as any,
 })
 
 const getPlayerInfo = async () => {
@@ -88,22 +92,21 @@ const getPlayerInfo = async () => {
       {{ battleName }}
     </h1> -->
 
-    <PlayerInfo :player="player2" player-icon="/resources/player02.png" :mt="true" />
+    <PlayerInfo
+      :player="player2"
+      player-icon="/resources/player02.png"
+      :mt="true"
+    />
 
     <div class="flex-center flex-col my-10">
       <Card :card="player2" :title="player2?.instance.playerName" />
 
       <div class="flex items-center flex-row">
-        <CustomButton
+        <ActionButton
+          img-url="/resources/attack.png"
           rest-styles="mr-2 hover:border-yellow-400"
           @handle-click="() => {}"
-        >
-          <img
-            src="/resources/attack.png"
-            alt="action_img"
-            class="game-move-icon"
-          />
-        </CustomButton>
+        />
 
         <Card
           :card="player1"
@@ -111,16 +114,11 @@ const getPlayerInfo = async () => {
           rest-styles="mt-3"
         />
 
-        <CustomButton
+        <ActionButton
+          img-url="/resources/defense.png"
           rest-styles="ml6 hover:border-red-600"
           @handle-click="() => {}"
-        >
-          <img
-            src="/resources/defense.png"
-            alt="action_img"
-            class="game-move-icon"
-          />
-        </CustomButton>
+        />
       </div>
     </div>
 

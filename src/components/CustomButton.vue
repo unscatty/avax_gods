@@ -1,7 +1,7 @@
 <script setup lang="ts">
 defineProps<{
   title?: string
-  restStyles: string
+  restStyles?: string
 }>()
 
 const emit = defineEmits(['handleClick'])
