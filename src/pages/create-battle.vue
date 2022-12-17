@@ -21,11 +21,15 @@ const handleClick = async () => {
   }
 }
 
-watch(activeBattle, () => {
-  if (activeBattle.value?.battleStatus === 0) {
-    isWaitingBattle.value = true
-  }
-})
+watch(
+  activeBattle,
+  (activeBattleChange) => {
+    if (activeBattleChange?.battleStatus === 0) {
+      isWaitingBattle.value = true
+    }
+  },
+  { immediate: true }
+)
 </script>
 
 <template>

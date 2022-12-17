@@ -3,45 +3,43 @@ import { ref } from 'vue'
 import { type AVAXGods } from '~/contract/types'
 
 export const useBattleStore = defineStore('battle', () => {
-  const web3Store = useWeb3Store()
-  const avaxContract = ref<AVAXGods>()
-
-  web3Store.$subscribe((_, state) => {
-    if (state.avaxContract) {
-      avaxContract.value = markRaw(state.avaxContract as AVAXGods)
-    }
-  })
+  const { avaxContract, walletAddress } = storeToRefs(useWeb3Store())
 
   const pendingBattles = ref<AVAXGods.BattleStructOutput[]>([])
   const activeBattle = ref<AVAXGods.BattleStructOutput>()
   const players = ref<AVAXGods.PlayerStructOutput[]>()
 
-  const unwatchContract = watch(avaxContract, async () => {
-    try {
-    const allBattles = await avaxContract.value?.getAllBattles()
-    const _pendingBattles = allBattles?.filter(
-      (battle) => battle.battleStatus === 0
-    )
-
-    if (_pendingBattles && _pendingBattles?.length > 1) {
-      pendingBattles.value = _pendingBattles.slice(1)
-    }
-
-    allBattles?.forEach((battle) => {
-      if (
-        battle.players.find(
-          (player) => player.toLowerCase() === web3Store.walletAddress.toLowerCase()
+  const unwatchContract = watch(
+    avaxContract,
+    async () => {
+      try {
+        const allBattles = await avaxContract.value?.getAllBattles()
+        const _pendingBattles = allBattles?.filter(
+          (battle) => battle.battleStatus === 0
         )
-      ) {
-        if (battle.winner.startsWith('0x00')) {
-          activeBattle.value = battle
+
+        if (_pendingBattles && _pendingBattles?.length > 1) {
+          pendingBattles.value = _pendingBattles.slice(1)
         }
+
+        allBattles?.forEach((battle) => {
+          if (
+            battle.players.find(
+              (player) =>
+                player.toLowerCase() === walletAddress.value.toLowerCase()
+            )
+          ) {
+            if (battle.winner.startsWith('0x00')) {
+              activeBattle.value = battle
+            }
+          }
+        })
+      } catch (error) {
+        console.info(error)
       }
-    })
-    } catch (error) {
-      console.info(error)
-    }
-  })
+    },
+    { immediate: true }
+  )
 
   onUnmounted(unwatchContract)
 
