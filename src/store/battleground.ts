@@ -32,8 +32,7 @@ export const useBattlegroundStore = defineStore('battleground', () => {
 
   const selectedBattleground = useStorage<BattlegroundChoice>(
     'battleground',
-    availableBattlegrounds[0],
-    localStorage
+    availableBattlegrounds[0]
   )
 
   return {
