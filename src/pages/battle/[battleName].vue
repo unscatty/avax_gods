@@ -6,10 +6,11 @@ const router = useRouter()
 const { setAlertInfo } = useAlertInfoStore()
 const { walletAddress, avaxContract } = storeToRefs(useWeb3Store())
 const { players, activeBattle } = storeToRefs(useBattleStore())
+const { battleground } = storeToRefs(useBattlegroundStore())
 
 const props = defineProps<{ battleName: string }>()
 
-const battleGround = ref('bg-astral')
+// const battleGround = ref('bg-astral')
 const player1 = ref<PlayerData>({
   attack: -1,
   health: 20,
@@ -87,11 +88,7 @@ const getPlayerInfo = async () => {
 </script>
 
 <template>
-  <div class="flex-between game-container bg-cover" :class="battleGround">
-    <!-- <h1 class="text-xl text-white">
-      {{ battleName }}
-    </h1> -->
-
+  <div class="flex-between game-container bg-cover" :class="battleground.id">
     <PlayerInfo
       :player="player2"
       player-icon="/resources/player02.png"

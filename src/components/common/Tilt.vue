@@ -14,7 +14,7 @@ onMounted(() =>
   VanillaTilt.init(wrapperRef.value!, { ...props, scale: props.scaleSize || 1 })
 )
 
-onUnmounted(() => wrapperRef.value!.vanillaTilt.destroy())
+// onUnmounted(() => wrapperRef.value!.vanillaTilt.destroy())
 </script>
 
 <template>

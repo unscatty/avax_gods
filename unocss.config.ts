@@ -186,5 +186,16 @@ export default defineConfig({
     }),
   ],
   transformers: [transformerDirectives(), transformerVariantGroup()],
-  safelist: 'prose prose-sm m-auto text-left'.split(' '),
+  safelist: [
+    'prose',
+    'prose-sm',
+    'm-auto',
+    'text-left',
+    'bg-astral',
+    'bg-saiman',
+    'bg-eoaalien',
+    'bg-panight',
+    'bg-hero-img',
+    'bg-landing',
+  ],
 })
