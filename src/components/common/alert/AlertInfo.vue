@@ -7,7 +7,7 @@ const { clearAlertInfo } = alertStore
 <template>
   <div
     v-show="alertInfo.status"
-    class="alert-container flex-center cursor-pointer"
+    class="alert-container flex-center cursor-pointer z-999"
     @click="clearAlertInfo"
   >
     <div class="alert-wrapper" :class="alertInfo.type">
