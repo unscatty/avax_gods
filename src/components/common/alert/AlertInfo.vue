@@ -1,9 +1,15 @@
 <script setup lang="ts">
-const { alertInfo } = storeToRefs(useAlertInfoStore())
+const alertStore = useAlertInfoStore()
+const { alertInfo } = storeToRefs(alertStore)
+const { clearAlertInfo } = alertStore
 </script>
 
 <template>
-  <div v-show="alertInfo.status" class="alert-container flex-center">
+  <div
+    v-show="alertInfo.status"
+    class="alert-container flex-center cursor-pointer"
+    @click="clearAlertInfo"
+  >
     <div class="alert-wrapper" :class="alertInfo.type">
       <AlertIcon :type="alertInfo.type" />
       {{ alertInfo.message || 'Something went wrong :c' }}
