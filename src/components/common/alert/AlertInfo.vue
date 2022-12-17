@@ -1,15 +1,12 @@
 <script setup lang="ts">
-defineProps<{
-  type: string
-  message?: string
-}>()
+const { alertInfo } = storeToRefs(useAlertInfoStore())
 </script>
 
 <template>
-  <div class="alert-container flex-center">
-    <div class="alert-wrapper" :class="type">
-      <AlertIcon :type="type" />
-      {{ message || 'Something went wrong :c' }}
+  <div v-show="alertInfo.status" class="alert-container flex-center">
+    <div class="alert-wrapper" :class="alertInfo.type">
+      <AlertIcon :type="alertInfo.type" />
+      {{ alertInfo.message || 'Something went wrong :c' }}
     </div>
   </div>
 </template>
