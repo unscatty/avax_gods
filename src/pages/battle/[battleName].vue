@@ -3,7 +3,6 @@ import { storeToRefs } from 'pinia'
 import { PlayerData } from '~/components/battle/types/battle'
 
 const router = useRouter()
-const { setAlertInfo } = useAlertInfoStore()
 const { walletAddress, avaxContract } = storeToRefs(useWeb3Store())
 const { players, activeBattle } = storeToRefs(useBattleStore())
 const { battleground } = storeToRefs(useBattlegroundStore())
@@ -88,6 +87,7 @@ const getPlayerInfo = async () => {
 </script>
 
 <template>
+  <AlertInfo />
   <div class="flex-between game-container bg-cover" :class="battleground.id">
     <PlayerInfo
       :player="player2"

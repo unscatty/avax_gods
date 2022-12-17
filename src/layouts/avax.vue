@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
-
 const router = useRouter()
 const meta = computed(() => router.currentRoute.value.meta)
 
@@ -14,19 +12,12 @@ const layoutTitle = computed(
 const layoutDescription = computed(
   () => (meta.value.layoutDescription as string) || defaultDescription
 )
-
-// Alert
-const { alertInfo } = storeToRefs(useAlertInfoStore())
 </script>
 
 <template>
   <div class="hoc-container">
     <!-- Alert compoment -->
-    <AlertInfo
-      v-show="alertInfo.status"
-      :type="alertInfo.type"
-      :message="alertInfo.message"
-    />
+    <AlertInfo />
 
     <div class="hoc-content-box">
       <img

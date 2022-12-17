@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
 import { type BattlegroundChoice } from '~/store/battleground'
 
 const router = useRouter()
@@ -7,9 +6,7 @@ const router = useRouter()
 const battlegroundStore = useBattlegroundStore()
 
 // Alert
-const alertInfoStore = useAlertInfoStore()
-const { setAlertInfo, clearAlertInfo } = alertInfoStore
-const { alertInfo } = storeToRefs(alertInfoStore)
+const { setAlertInfo } = useAlertInfoStore()
 
 const handleBattleGroundChoice = (ground: BattlegroundChoice) => {
   battlegroundStore.battleground = ground
@@ -23,20 +20,14 @@ const handleBattleGroundChoice = (ground: BattlegroundChoice) => {
   const delay = setTimeout(() => {
     router.back()
 
-    clearAlertInfo()
-    
     clearTimeout(delay)
-  }, 1000)
+  }, 350)
 }
 </script>
 
 <template>
+  <AlertInfo />
   <div class="flex-center battleground-container">
-    <AlertInfo
-      v-show="alertInfo.status"
-      :type="alertInfo.type"
-      :message="alertInfo.message"
-    />
     <h1 class="head-text text-center">
       Choose your <span class="text-site-violet">Battle</span>Ground
 
