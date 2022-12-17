@@ -15,6 +15,7 @@ const layoutDescription = computed(
 </script>
 
 <template>
+  <OnBoard />
   <div class="hoc-container">
     <!-- Alert compoment -->
     <AlertInfo />

@@ -1,3 +1,4 @@
 <template>
+  <OnBoard />
   <RouterView />
 </template>
