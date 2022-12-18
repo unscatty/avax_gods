@@ -1,4 +1,6 @@
 <script setup lang="ts">
+useEventListeners()
+
 const router = useRouter()
 const meta = computed(() => router.currentRoute.value.meta)
 

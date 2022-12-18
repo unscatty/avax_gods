@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-// import { createEventListeners } from '~/utils/create-event-listeners'
-// import { AVAXGods } from '../contract/types'
 const router = useRouter()
 
 const { avaxContract, walletAddress } = storeToRefs(useWeb3Store())
@@ -62,10 +60,10 @@ const checkForPlayerToken = () => {
     setAlertInfo({
       status: true,
       type: 'info',
-      message: 'Redirecting...',
+      message: 'You are ready to Battle!',
     })
 
-    unwatchPlayerCreated()
+    // unwatchPlayerCreated()
 
     router.push('/create-battle')
   } else {
@@ -77,14 +75,7 @@ const checkForPlayerToken = () => {
   }
 }
 
-const unwatchPlayerCreated = watch(
-  [playerExists, playerTokenExists],
-  checkForPlayerToken
-)
-
-// onMounted(async () => {
-//   await checkForPlayerToken()
-// })
+watch([playerExists, playerTokenExists], checkForPlayerToken)
 </script>
 
 <template>
