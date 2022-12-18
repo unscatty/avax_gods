@@ -55,7 +55,7 @@ export default defineConfig({
       'game-container':
         'w-screen min-h-screen bg-cover bg-no-repeat bg-center flex-col',
       'game-move-box':
-        'sm:w-20 w-14 sm:h-20 h-14 rounded-full cursor-pointer border-[2px]',
+        'sm:w-20 w-14 sm:h-20 h-14 rounded-full cursor-pointer border-width-[0.2rem] border-solid',
       'game-move-icon': 'w-1/2 h-1/2 object-contain',
 
       // player info component

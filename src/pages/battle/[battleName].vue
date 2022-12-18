@@ -1,8 +1,14 @@
 <script setup lang="ts">
+import { info } from 'console'
 import { storeToRefs } from 'pinia'
 import { PlayerData } from '~/components/battle/types/battle'
+import { playAudio } from '~/utils/animation'
+
+const attackSound = '/resources/sounds/attack.wav'
+const defenseSound = '/resources/sounds/defense.mp3'
 
 const router = useRouter()
+const { setAlertInfo } = useAlertInfoStore()
 const { walletAddress, avaxContract } = storeToRefs(useWeb3Store())
 const { players, activeBattle } = storeToRefs(useBattleStore())
 const { battleground } = storeToRefs(useBattlegroundStore())
@@ -78,6 +84,25 @@ const getPlayerInfo = async () => {
   }
 }
 
+const makeAMove = async (choice: number) => {
+  playAudio(choice === 1 ? attackSound : defenseSound)
+
+  try {
+    // await avaxContract.value?.attackOrDefendChoice(choice, props.battleName)
+
+    setAlertInfo({
+      status: true,
+      type: 'info',
+      message: `Initiating ${choice === 1 ? 'attack' : 'defense'}`,
+    })
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+const attackMove = () => makeAMove(1)
+const defenseMove = () => makeAMove(2)
+
 // const unwatchChanges = watch(
 //   [avaxContract, activeBattle, props.battleName],
 //   getPlayerInfo
@@ -102,7 +127,7 @@ const getPlayerInfo = async () => {
         <ActionButton
           img-url="/resources/attack.png"
           rest-styles="mr-2 hover:border-yellow-400"
-          @handle-click="() => {}"
+          @handle-click="attackMove"
         />
 
         <Card
@@ -113,8 +138,8 @@ const getPlayerInfo = async () => {
 
         <ActionButton
           img-url="/resources/defense.png"
-          rest-styles="ml6 hover:border-red-600"
-          @handle-click="() => {}"
+          rest-styles="ml-6 hover:border-red-600"
+          @handle-click="defenseMove"
         />
       </div>
     </div>
