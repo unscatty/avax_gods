@@ -4,6 +4,7 @@ import { storeToRefs } from 'pinia'
 const router = useRouter()
 const { walletAddress } = storeToRefs(useWeb3Store())
 const formattedAddress = computed(() => walletAddress.value.slice(0, 30))
+const { activeBattle } = storeToRefs(useBattleStore())
 
 const unknownAddress = '?'.repeat(30)
 </script>
@@ -16,6 +17,12 @@ const unknownAddress = '?'.repeat(30)
         rest-styles="mt-6"
         @handle-click="router.push('/battleground')"
       />
+    </div>
+
+    <div class="flex flex-center flex-col">
+      <h2 class="game-load-head-text text-center text-4xl">
+        {{ activeBattle?.name }}
+      </h2>
     </div>
 
     <div class="flex-1 flex-center flex-col">
