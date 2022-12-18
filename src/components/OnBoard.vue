@@ -1,30 +1,21 @@
 <script setup lang="ts">
-import { GetParams, SwitchNetwork } from '~/utils/onboard'
+import { SwitchNetwork } from '~/utils/onboard'
 
 const { updateCurrentWalletAddress } = useWeb3Store()
+const { step } = storeToRefs(useStepStore())
 
-const isModalOpen = ref(false)
-const step = ref(-1)
+const isModalOpen = computed(() => step.value !== -1)
 
-const resetParams = async () => {
-  const currentStep = await GetParams()
-
-  step.value = currentStep.step
-  isModalOpen.value = currentStep.step !== -1
-}
-
-const advice = ref<{
+const advice = computed<{
   text: string
   button?: {
     title: string
     handler: () => void
   }
-}>()
-
-watch(step, () => {
+}>(() => {
   switch (step.value) {
     case 0:
-      advice.value = {
+      return {
         text: "You don't have Core Wallet installed!",
         button: {
           title: 'Download Core',
@@ -34,10 +25,10 @@ watch(step, () => {
         },
       }
 
-      return
+    // return
 
     case 1:
-      advice.value = {
+      return {
         text: "You haven't connected your account to Core Wallet!",
         button: {
           title: 'Connect your account',
@@ -45,10 +36,10 @@ watch(step, () => {
         },
       }
 
-      return
+    // return
 
     case 2:
-      advice.value = {
+      return {
         text: "You're on a different network. Switch to Fuji C-Chain.",
         button: {
           title: 'Switch',
@@ -56,10 +47,10 @@ watch(step, () => {
         },
       }
 
-      return
+    // return
 
     case 3:
-      advice.value = {
+      return {
         text: "Oops, you don't have AVAX tokens in your account",
         button: {
           title: 'Grab some test tokens',
@@ -68,26 +59,14 @@ watch(step, () => {
           },
         },
       }
-      return
+    // return
 
     default:
-      advice.value = {
+      return {
         text: 'Good to go!',
       }
-      return
+    // return
   }
-})
-
-onMounted(() => {
-  resetParams()
-
-  window.ethereum?.on('chainChanged', () => {
-    resetParams()
-  })
-
-  window.ethereum?.on('accountsChanged', () => {
-    resetParams()
-  })
 })
 </script>
 
