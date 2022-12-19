@@ -41,7 +41,7 @@ const generateRandomCardImage = () =>
 defineProps<{
   card: PlayerData
   title: string
-  cardRef?: Ref<HTMLElement>
+  cardRef?: Ref<HTMLElement | undefined>
   restStyles?: string
   isPlayerTwo?: boolean
 }>()

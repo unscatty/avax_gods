@@ -32,7 +32,7 @@ const handleClick = async (battleName: string) => {
   <h2 class="join-head-text">Available Battles:</h2>
 
   <div class="join-container">
-    <p class="text-white">{{ walletAddress }}</p>
+    <!-- <p class="text-white">{{ walletAddress }}</p> -->
     <template v-if="availableBattles.length">
       <div
         v-for="(battle, index) in availableBattles"

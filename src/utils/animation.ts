@@ -108,7 +108,7 @@ function explodeGroup(
 }
 
 export function sparcle(
-  event: MouseEvent,
+  event: { pageX: number; pageY: number },
   clipSrc = '/resources/sounds/explosion.mp3'
 ) {
   const explosions: HTMLElement[] = []
