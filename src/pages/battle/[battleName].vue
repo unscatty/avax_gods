@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { info } from 'console'
 import { storeToRefs } from 'pinia'
 import { PlayerData } from '~/components/battle/types/battle'
 import { playAudio } from '~/utils/animation'
@@ -10,12 +9,11 @@ const defenseSound = '/resources/sounds/defense.mp3'
 const router = useRouter()
 const { setAlertInfo } = useAlertInfoStore()
 const { walletAddress, avaxContract } = storeToRefs(useWeb3Store())
-const { players, activeBattle } = storeToRefs(useBattleStore())
+const { activeBattle, player1Ref, player2Ref } = storeToRefs(useBattleStore())
 const { battleground } = storeToRefs(useBattlegroundStore())
 
 const props = defineProps<{ battleName: string }>()
 
-// const battleGround = ref('bg-astral')
 const player1 = ref<PlayerData>({
   attack: -1,
   health: 20,
@@ -88,40 +86,59 @@ const makeAMove = async (choice: number) => {
   playAudio(choice === 1 ? attackSound : defenseSound)
 
   try {
-    // await avaxContract.value?.attackOrDefendChoice(choice, props.battleName)
+    await avaxContract.value?.attackOrDefendChoice(choice, props.battleName)
 
     setAlertInfo({
       status: true,
       type: 'info',
       message: `Initiating ${choice === 1 ? 'attack' : 'defense'}`,
     })
-  } catch (error) {
-    console.error(error)
+  } catch (error: any) {
+    console.info(error)
+    console.info(error.message)
+    console.info(typeof error.message)
+    console.info(typeof error)
   }
 }
 
 const attackMove = () => makeAMove(1)
 const defenseMove = () => makeAMove(2)
 
-// const unwatchChanges = watch(
-//   [avaxContract, activeBattle, props.battleName],
-//   getPlayerInfo
-// )
+const refPlayer1 = () => player1Ref
+const refPlayer2 = () => player2Ref
+
+watch([avaxContract, activeBattle, props], getPlayerInfo, {
+  immediate: true,
+})
+
+onMounted(() => {
+  const timer = setTimeout(() => {
+    if (!activeBattle.value) {
+      router.push('/')
+
+      clearTimeout(timer)
+    }
+  }, 2_000)
+})
 
 // onUnmounted(unwatchChanges)
 </script>
 
 <template>
-  <AlertInfo />
   <div class="flex-between game-container bg-cover" :class="battleground.id">
     <PlayerInfo
       :player="player2"
       player-icon="/resources/player02.png"
-      :mt="true"
+      margin-top
     />
 
     <div class="flex-center flex-col my-10">
-      <Card :card="player2" :title="player2?.instance.playerName" />
+      <Card
+        :card="player2"
+        :title="player2?.instance.playerName"
+        :card-ref="refPlayer1"
+        is-player-two
+      />
 
       <div class="flex items-center flex-row">
         <ActionButton
@@ -133,6 +150,7 @@ const defenseMove = () => makeAMove(2)
         <Card
           :card="player1"
           :title="player1?.instance.playerName"
+          :card-ref="refPlayer2"
           rest-styles="mt-3"
         />
 
@@ -145,6 +163,7 @@ const defenseMove = () => makeAMove(2)
     </div>
 
     <PlayerInfo :player="player1" player-icon="/resources/player01.png" />
+
     <GameInfo />
   </div>
 </template>

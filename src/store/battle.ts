@@ -9,8 +9,14 @@ export const useBattleStore = defineStore('battle', () => {
   const activeBattle = ref<AVAXGods.BattleStructOutput>()
   const players = ref<AVAXGods.PlayerStructOutput[]>()
 
+  // Player refs
+  const player1Ref = ref<HTMLElement>()
+  const player2Ref = ref<HTMLElement>()
+
+  const [updateGameData, setUpdateGameData] = useState(0)
+
   const unwatchContract = watch(
-    avaxContract,
+    [avaxContract, updateGameData],
     async () => {
       try {
         const allBattles = await avaxContract.value?.getAllBattles()
@@ -47,6 +53,12 @@ export const useBattleStore = defineStore('battle', () => {
     players,
     pendingBattles,
     activeBattle,
+
+    player1Ref,
+    player2Ref,
+
+    updateGameData,
+    setUpdateGameData,
   }
 })
 
