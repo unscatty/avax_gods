@@ -172,7 +172,7 @@ declare global {
   const useElementVisibility: typeof import('@vueuse/core')['useElementVisibility']
   const useEventBus: typeof import('@vueuse/core')['useEventBus']
   const useEventListener: typeof import('@vueuse/core')['useEventListener']
-  const useEventListeners: typeof import('./composables/eventListeners')['useEventListeners']
+  const useEventListeners: typeof import('./composables/event-listeners')['useEventListeners']
   const useEventSource: typeof import('@vueuse/core')['useEventSource']
   const useEyeDropper: typeof import('@vueuse/core')['useEyeDropper']
   const useFavicon: typeof import('@vueuse/core')['useFavicon']
@@ -471,7 +471,7 @@ declare module 'vue' {
     readonly useElementVisibility: UnwrapRef<typeof import('@vueuse/core')['useElementVisibility']>
     readonly useEventBus: UnwrapRef<typeof import('@vueuse/core')['useEventBus']>
     readonly useEventListener: UnwrapRef<typeof import('@vueuse/core')['useEventListener']>
-    readonly useEventListeners: UnwrapRef<typeof import('./composables/eventListeners')['useEventListeners']>
+    readonly useEventListeners: UnwrapRef<typeof import('./composables/event-listeners')['useEventListeners']>
     readonly useEventSource: UnwrapRef<typeof import('@vueuse/core')['useEventSource']>
     readonly useEyeDropper: UnwrapRef<typeof import('@vueuse/core')['useEyeDropper']>
     readonly useFavicon: UnwrapRef<typeof import('@vueuse/core')['useFavicon']>

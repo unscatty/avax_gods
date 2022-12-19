@@ -13,7 +13,7 @@ export const useEventListeners = () => {
   const { player1Ref, player2Ref } = storeToRefs(battleStore)
 
   watch(
-    step,
+    [step, avaxContract],
     () => {
       createEventListeners({
         router,
@@ -28,6 +28,4 @@ export const useEventListeners = () => {
     },
     { immediate: true }
   )
-
-  return { step }
 }
