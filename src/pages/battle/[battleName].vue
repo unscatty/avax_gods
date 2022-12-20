@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import { PlayerData } from '~/components/battle/types/battle'
-import { playAudio } from '~/utils/animation'
+import { storeToRefs } from 'pinia';
+import { PlayerData } from '~/components/battle/types/battle';
+import { playAudio } from '~/utils/animation';
+import { type WalletError } from '~/utils/error-message';
 
 const attackSound = '/resources/sounds/attack.wav'
 const defenseSound = '/resources/sounds/defense.mp3'
 
 const router = useRouter()
-const { setAlertInfo } = useAlertInfoStore()
+const { setAlertInfo, setErrorMessage } = useAlertInfoStore()
 const { walletAddress, avaxContract } = storeToRefs(useWeb3Store())
 const { activeBattle, player1Ref, player2Ref } = storeToRefs(useBattleStore())
 const { battleground } = storeToRefs(useBattlegroundStore())
@@ -78,7 +79,7 @@ const getPlayerInfo = async () => {
       mana: p2Mana,
     }
   } catch (error) {
-    console.error(error)
+    setErrorMessage(<WalletError>error)
   }
 }
 
@@ -93,11 +94,8 @@ const makeAMove = async (choice: number) => {
       type: 'info',
       message: `Initiating ${choice === 1 ? 'attack' : 'defense'}`,
     })
-  } catch (error: any) {
-    console.info(error)
-    console.info(error.message)
-    console.info(typeof error.message)
-    console.info(typeof error)
+  } catch (error) {
+    setErrorMessage(<WalletError>error)
   }
 }
 

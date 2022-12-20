@@ -4,5 +4,6 @@ useEventListeners()
 
 <template>
   <OnBoard />
+  <AlertInfo />
   <RouterView />
 </template>

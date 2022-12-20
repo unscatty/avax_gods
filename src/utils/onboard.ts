@@ -1,17 +1,20 @@
+import { type WalletError } from './error-message'
+
 function isEthereum() {
   return Boolean(window.ethereum)
 }
 
 function getChainID() {
-  if (isEthereum())
-    return parseInt(window.ethereum!.chainId, 16)
+  if (isEthereum()) return parseInt(window.ethereum!.chainId, 16)
 
   return 0
 }
 
 async function handleConnection(accounts: unknown[]) {
   if (accounts.length === 0) {
-    const fetchedAccounts = await window.ethereum!.request!({ method: 'eth_requestAccounts' })
+    const fetchedAccounts = await window.ethereum!.request!({
+      method: 'eth_requestAccounts',
+    })
 
     return fetchedAccounts
   }
@@ -44,8 +47,7 @@ async function requestBalance(currentAccount: unknown) {
       currentBalance = parseInt(currentBalance.toString(), 16) / 1e18
 
       return { currentBalance, err: false }
-    }
-    catch (err) {
+    } catch (err) {
       return { currentBalance, err: true }
     }
   }
@@ -103,20 +105,24 @@ export const GetParams = async () => {
 }
 
 export async function SwitchNetwork() {
+  const { setErrorMessage } = useAlertInfoStore()
+
   await window?.ethereum?.request!({
     method: 'wallet_addEthereumChain',
-    params: [{
-      chainId: '0xA869',
-      chainName: 'Fuji C-Chain',
-      nativeCurrency: {
-        name: 'AVAX',
-        symbol: 'AVAX',
-        decimals: 18,
+    params: [
+      {
+        chainId: '0xA869',
+        chainName: 'Fuji C-Chain',
+        nativeCurrency: {
+          name: 'AVAX',
+          symbol: 'AVAX',
+          decimals: 18,
+        },
+        rpcUrls: ['https://api.avax-test.network/ext/bc/C/rpc'],
+        blockExplorerUrls: ['https://testnet.snowtrace.io'],
       },
-      rpcUrls: ['https://api.avax-test.network/ext/bc/C/rpc'],
-      blockExplorerUrls: ['https://testnet.snowtrace.io'],
-    }],
+    ],
   }).catch((error) => {
-    console.error(error)
+    setErrorMessage(<WalletError>error)
   })
 }

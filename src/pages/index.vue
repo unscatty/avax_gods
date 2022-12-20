@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
+import { storeToRefs } from 'pinia';
+import { type WalletError } from '~/utils/error-message';
 const router = useRouter()
 
 const { avaxContract, walletAddress } = storeToRefs(useWeb3Store())
-const { setAlertInfo } = useAlertInfoStore()
+const { setAlertInfo, setErrorMessage } = useAlertInfoStore()
 
 const [playerName, setPlayerName] = useState('')
 
@@ -44,14 +45,8 @@ const handleClick = async () => {
     } else {
       console.info('Player exists ')
     }
-  } catch (error: any) {
-    console.info(error)
-
-    setAlertInfo({
-      status: true,
-      type: 'failure',
-      message: error.message as string,
-    })
+  } catch (error) {
+    setErrorMessage(<WalletError>error)
   }
 }
 

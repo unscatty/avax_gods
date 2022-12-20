@@ -1,9 +1,12 @@
 import { ethers } from 'ethers'
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import Web3Modal from 'web3modal'
-import { type AVAXGods, AVAXGods__factory } from '~/contract/types'
+import { AVAXGods__factory, type AVAXGods } from '~/contract/types'
+import { type WalletError } from '~/utils/error-message'
 
 export const useWeb3Store = defineStore('web3', () => {
+  const { setErrorMessage } = useAlertInfoStore()
+
   const walletAddress = ref('')
   const provider = ref<ethers.providers.Web3Provider>()
   const avaxContract = ref<AVAXGods>()
@@ -42,7 +45,7 @@ export const useWeb3Store = defineStore('web3', () => {
 
       window.ethereum?.on('accountsChanged', updateCurrentWalletAddress)
     } catch (error) {
-      console.info(error)
+      setErrorMessage(<WalletError>error)
     }
   })
 

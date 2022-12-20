@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
+import { type WalletError } from '~/utils/error-message'
 
+const { setErrorMessage } = useAlertInfoStore()
 const { avaxContract } = storeToRefs(useWeb3Store())
 const { activeBattle } = storeToRefs(useBattleStore())
 const router = useRouter()
@@ -17,7 +19,7 @@ const handleClick = async () => {
 
     // pendingBattles.fo
   } catch (error) {
-    console.error(error)
+    setErrorMessage(<WalletError>error)
   }
 }
 

@@ -1,8 +1,10 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { ref } from 'vue'
 import { type AVAXGods } from '~/contract/types'
+import { type WalletError } from '~/utils/error-message'
 
 export const useBattleStore = defineStore('battle', () => {
+  const { setErrorMessage } = useAlertInfoStore()
   const { avaxContract, walletAddress } = storeToRefs(useWeb3Store())
 
   const pendingBattles = ref<AVAXGods.BattleStructOutput[]>([])
@@ -41,7 +43,7 @@ export const useBattleStore = defineStore('battle', () => {
           }
         })
       } catch (error) {
-        console.info(error)
+        setErrorMessage(<WalletError>error)
       }
     },
     { immediate: true }

@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
+import { storeToRefs } from 'pinia';
+import { type WalletError } from '~/utils/error-message';
 
 const router = useRouter()
 const { pendingBattles } = storeToRefs(useBattleStore())
 const { walletAddress, avaxContract } = storeToRefs(useWeb3Store())
-const { setAlertInfo } = useAlertInfoStore()
+const { setAlertInfo, setErrorMessage } = useAlertInfoStore()
 
 // Battles that were not created by the current player
 const availableBattles = computed(() =>
@@ -23,7 +24,7 @@ const handleClick = async (battleName: string) => {
       message: `Joining ${battleName}...`,
     })
   } catch (error) {
-    console.error(error)
+    setErrorMessage(<WalletError>error)
   }
 }
 </script>
