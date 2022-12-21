@@ -10,7 +10,7 @@ const { setAlertInfo, setErrorMessage } = useAlertInfoStore()
 // Battles that were not created by the current player
 const availableBattles = computed(() =>
   pendingBattles.value.filter(
-    (battle) => !battle.players.includes(walletAddress.value)
+    (battle) => !battle.players.some((address) => address.toLowerCase() === walletAddress.value.toLowerCase())
   )
 )
 

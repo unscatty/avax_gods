@@ -17,7 +17,7 @@ export const useWeb3Store = defineStore('web3', () => {
     })) as string[]
 
     if (accounts) {
-      walletAddress.value = accounts[0]
+      walletAddress.value = accounts[0].toLowerCase()
     }
   }
 
