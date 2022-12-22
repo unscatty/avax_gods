@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia';
-import { type WalletError } from '~/utils/error-message';
+import { storeToRefs } from 'pinia'
+import { type WalletError } from '~/utils/error-message'
 const router = useRouter()
 
 const { avaxContract, walletAddress } = storeToRefs(useWeb3Store())
 const { setAlertInfo, setErrorMessage } = useAlertInfoStore()
 
-const [playerName, setPlayerName] = useState('')
+const playerName = ref('')
 
 const playerExists = computedAsync<boolean>(async () => {
   return avaxContract.value?.isPlayer(walletAddress.value) || false
@@ -78,10 +78,9 @@ watch([playerExists, playerTokenExists], checkForPlayerToken)
     <div class="flex flex-col">
       <!-- CustomInput component  -->
       <CustomInput
+        v-model="playerName"
         label="Name"
         placeholder="Enter your player name"
-        :value="playerName"
-        @handle-change="setPlayerName"
       />
     </div>
     <CustomButton

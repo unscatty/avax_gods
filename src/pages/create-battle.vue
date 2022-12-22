@@ -39,10 +39,9 @@ watch(
 
   <div class="flex flex-col mb-5">
     <CustomInput
+      v-model="battleName"
       label="Battle"
       placeholder="Enter battle name"
-      :value="battleName"
-      @handle-change="(val) => (battleName = val)"
     />
     <CustomButton
       title="Create Battle"

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia';
-import { PlayerData } from '~/components/battle/types/battle';
-import { playAudio } from '~/utils/animation';
-import { type WalletError } from '~/utils/error-message';
+import { storeToRefs } from 'pinia'
+import { PlayerData } from '~/components/battle/types/battle'
+import { playAudio } from '~/utils/animation'
+import { type WalletError } from '~/utils/error-message'
 
 const attackSound = '/resources/sounds/attack.wav'
 const defenseSound = '/resources/sounds/defense.mp3'
@@ -79,6 +79,7 @@ const getPlayerInfo = async () => {
       mana: p2Mana,
     }
   } catch (error) {
+    console.error(error)
     setErrorMessage(<WalletError>error)
   }
 }
@@ -101,9 +102,6 @@ const makeAMove = async (choice: number) => {
 
 const attackMove = () => makeAMove(1)
 const defenseMove = () => makeAMove(2)
-
-const refPlayer1 = () => player1Ref
-const refPlayer2 = () => player2Ref
 
 watch([avaxContract, activeBattle, props], getPlayerInfo, {
   immediate: true,
@@ -132,9 +130,9 @@ onMounted(() => {
 
     <div class="flex-center flex-col my-10">
       <Card
+        v-model:card-ref="player2Ref"
         :card="player2"
         :title="player2?.instance.playerName"
-        :card-ref="refPlayer1"
         is-player-two
       />
 
@@ -146,9 +144,9 @@ onMounted(() => {
         />
 
         <Card
+          v-model:card-ref="player1Ref"
           :card="player1"
           :title="player1?.instance.playerName"
-          :card-ref="refPlayer2"
           rest-styles="mt-3"
         />
 

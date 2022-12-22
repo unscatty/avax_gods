@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { Ref } from 'vue'
 import { PlayerData } from '../battle/types/battle'
 
 const allCardImages = [
@@ -41,21 +40,30 @@ const generateRandomCardImage = () =>
 defineProps<{
   card: PlayerData
   title: string
-  cardRef?: Ref<HTMLElement | undefined>
   restStyles?: string
   isPlayerTwo?: boolean
 }>()
 
+const emit = defineEmits<{
+  (e: 'update:cardRef', value?: HTMLElement): void
+}>()
+
 const img1 = generateRandomCardImage()
 const img2 = generateRandomCardImage()
+
+const playerRef = ref<HTMLElement>()
+
+onMounted(() => emit('update:cardRef', playerRef.value))
 </script>
 
 <template>
-  <div class="card-container" :class="restStyles">
+  <div ref="playerRef" class="card-container" :class="restStyles">
     <Tilt parallax :max="60">
       <img :src="isPlayerTwo ? img1 : img2" alt="card" class="card-img" />
       <!-- Attack -->
-      <div class="card-point-container flex-center sm:left-[21.2%] left-[22%] popout">
+      <div
+        class="card-point-container flex-center sm:left-[21.2%] left-[22%] popout"
+      >
         <p class="card-point text-yellow-400">
           {{ card.attack > 0 ? card.attack : 'X' }}
         </p>

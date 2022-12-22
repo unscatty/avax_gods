@@ -1,23 +1,24 @@
 <script setup lang="ts">
-defineProps<{
+const props = defineProps<{
   label: string
   placeholder: string
-  value: string
+  modelValue: string
 }>()
 
-const emit = defineEmits<{
-  (e: 'handleChange', newValue: string): void
-}>()
+const emit = defineEmits(['update:modelValue'])
 
 const regex = /^[A-Za-z0-9]+$/
 
-const onValueChange = (event: Event) => {
-  const value = (<HTMLInputElement>event.target).value
-
-  if (value === '' || regex.test(value)) {
-    emit('handleChange', value)
+const data = useVModel(
+  props,
+  'modelValue',
+  (_, newValue: string) => {
+    if (newValue !== '' || regex.test(newValue)) {
+      emit('update:modelValue', newValue)
+    }
   }
-}
+)
+
 </script>
 
 <template>
@@ -25,10 +26,9 @@ const onValueChange = (event: Event) => {
     {{ label }}
   </label>
   <input
+    v-model="data"
     type="text"
     class="form-input"
     :placeholder="placeholder"
-    :value="value"
-    @change="onValueChange"
   />
 </template>
