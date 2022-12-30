@@ -1,6 +1,6 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { useState } from '~/composables/state'
-import { parseErrorMessage, type WalletError } from '~/utils/error-message'
+import { parseErrorMessage } from '~/utils/error-message'
 
 export const useAlertInfoStore = defineStore('alertInfo', () => {
   const [alertInfo, setAlertInfo] = useState({
@@ -12,7 +12,7 @@ export const useAlertInfoStore = defineStore('alertInfo', () => {
   const clearAlertInfo = () =>
     setAlertInfo({ status: false, type: 'info', message: '' })
 
-  const setErrorMessage = (error: WalletError) =>
+  const setErrorMessage = (error: any) =>
     setAlertInfo({
       status: true,
       message: parseErrorMessage(error),

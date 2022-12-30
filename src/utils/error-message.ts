@@ -18,6 +18,7 @@ export type WalletError = {
   }
   code: string
   version: string
+  [key: string]: any
 }
 
 export const parseErrorMessage = (error: WalletError) => {
@@ -27,6 +28,10 @@ export const parseErrorMessage = (error: WalletError) => {
 
   if (error.reason) {
     return error.reason
+  }
+
+  if (error.message) {
+    return error.message
   }
 
   return 'Unknow error'

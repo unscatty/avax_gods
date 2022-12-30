@@ -1,5 +1,3 @@
-import { type WalletError } from './error-message'
-
 function isEthereum() {
   return Boolean(window.ethereum)
 }
@@ -26,9 +24,13 @@ async function requestAccount() {
   let currentAccount = 0x0
 
   if (isEthereum() && getChainID() !== 0) {
-    let accounts = await window.ethereum!.request!({ method: 'eth_accounts' })
-    accounts = await handleConnection(accounts)
-    currentAccount = accounts[0]
+    try {
+      let accounts = await window.ethereum!.request!({ method: 'eth_accounts' })
+      accounts = await handleConnection(accounts)
+      currentAccount = accounts[0]
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return currentAccount
@@ -123,6 +125,6 @@ export async function SwitchNetwork() {
       },
     ],
   }).catch((error) => {
-    setErrorMessage(<WalletError>error)
+    setErrorMessage(error)
   })
 }

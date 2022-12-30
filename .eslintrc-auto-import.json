@@ -273,6 +273,7 @@
     "useVirtualList": true,
     "useWakeLock": true,
     "useWeb3Store": true,
+    "useWeb3StoreNoHooks": true,
     "useWebNotification": true,
     "useWebSocket": true,
     "useWebWorker": true,
