@@ -3,16 +3,20 @@ import { ref } from 'vue'
 import { GetParams } from '~/utils/onboard'
 
 export const useStepStore = defineStore('step', () => {
+  const { updateCurrentAccountAddress } = useWeb3Store()
+
   const step = ref(-1)
 
   const resetParams = async () => {
     const currentStep = await GetParams()
 
     step.value = currentStep.step
+
+    await updateCurrentAccountAddress()
   }
 
   onMounted(() => {
-    resetParams()
+    // resetParams()
 
     window.ethereum?.on('chainChanged', () => {
       resetParams()

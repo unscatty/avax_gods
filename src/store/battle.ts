@@ -1,11 +1,10 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { ref } from 'vue'
 import { type AVAXGods } from '~/contract/types'
-import { type WalletError } from '~/utils/error-message'
 
 export const useBattleStore = defineStore('battle', () => {
   const { setErrorMessage } = useAlertInfoStore()
-  const { avaxContract, walletAddress } = storeToRefs(useWeb3Store())
+  const { avaxContract, currentAccountAddress } = storeToRefs(useWeb3Store())
 
   const pendingBattles = ref<AVAXGods.BattleStructOutput[]>([])
   const activeBattle = ref<AVAXGods.BattleStructOutput>()
@@ -34,7 +33,8 @@ export const useBattleStore = defineStore('battle', () => {
           if (
             battle.players.find(
               (player) =>
-                player.toLowerCase() === walletAddress.value.toLowerCase()
+                player.toLowerCase() ===
+                currentAccountAddress.value.toLowerCase()
             )
           ) {
             if (battle.winner.startsWith('0x00')) {
@@ -43,7 +43,7 @@ export const useBattleStore = defineStore('battle', () => {
           }
         })
       } catch (error) {
-        setErrorMessage(<WalletError>error)
+        setErrorMessage(error)
       }
     },
     { immediate: true }
