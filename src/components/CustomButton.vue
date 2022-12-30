@@ -1,8 +1,21 @@
 <script setup lang="ts">
-defineProps<{
-  title?: string
-  restStyles?: string
-}>()
+defineProps({
+  title: {
+    type: String,
+    required: false,
+    default: '',
+  },
+  restStyles: {
+    type: String,
+    required: false,
+    default: '',
+  },
+  isEnabled: {
+    type: Boolean,
+    required: false,
+    default: true,
+  },
+})
 
 const emit = defineEmits(['handleClick'])
 </script>
@@ -12,6 +25,7 @@ const emit = defineEmits(['handleClick'])
     type="button"
     class="btn"
     :class="restStyles"
+    :disabled="!isEnabled"
     @click="emit('handleClick')"
   >
     <slot>
