@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { type WalletError } from '~/utils/error-message'
 
 const { setErrorMessage } = useAlertInfoStore()
 const { avaxContract } = storeToRefs(useWeb3Store())
@@ -19,7 +18,7 @@ const handleClick = async () => {
 
     // pendingBattles.fo
   } catch (error) {
-    setErrorMessage(<WalletError>error)
+    setErrorMessage(error)
   }
 }
 
@@ -33,6 +32,17 @@ watch(
   { immediate: true }
 )
 </script>
+
+<route lang="yaml">
+meta:
+  requiresAuth: true
+  
+  layout: avax
+  layoutTitle:
+    - Create
+    - a new Battle
+  layoutDescription: Create your own battle and wait for other players to join you
+</route>
 
 <template>
   <GameLoad v-show="isWaitingBattle" />
@@ -55,11 +65,3 @@ watch(
   </div>
 </template>
 
-<route lang="yaml">
-meta:
-  layout: avax
-  layoutTitle:
-    - Create
-    - a new Battle
-  layoutDescription: Create your own battle and wait for other players to join you
-</route>

@@ -2,8 +2,8 @@
 import { storeToRefs } from 'pinia'
 
 const router = useRouter()
-const { walletAddress } = storeToRefs(useWeb3Store())
-const formattedAddress = computed(() => walletAddress.value.slice(0, 30))
+const { currentAccountAddress } = storeToRefs(useWeb3Store())
+const formattedAddress = computed(() => currentAccountAddress.value.slice(0, 30))
 const { activeBattle } = storeToRefs(useBattleStore())
 
 const unknownAddress = '?'.repeat(30)

@@ -25,6 +25,11 @@ const handleBattleGroundChoice = (ground: BattlegroundChoice) => {
 }
 </script>
 
+<route lang="yaml">
+meta:
+  requiresAuth: true
+</route>
+
 <template>
   <AlertInfo />
   <div class="flex-center battleground-container">

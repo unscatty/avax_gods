@@ -2,14 +2,13 @@
 import { storeToRefs } from 'pinia'
 import { PlayerData } from '~/components/battle/types/battle'
 import { playAudio } from '~/utils/animation'
-import { type WalletError } from '~/utils/error-message'
 
 const attackSound = '/resources/sounds/attack.wav'
 const defenseSound = '/resources/sounds/defense.mp3'
 
 const router = useRouter()
 const { setAlertInfo, setErrorMessage } = useAlertInfoStore()
-const { walletAddress, avaxContract } = storeToRefs(useWeb3Store())
+const { currentAccountAddress, avaxContract } = storeToRefs(useWeb3Store())
 const { activeBattle, player1Ref, player2Ref } = storeToRefs(useBattleStore())
 const { battleground } = storeToRefs(useBattlegroundStore())
 
@@ -34,7 +33,7 @@ const player2 = ref<PlayerData>({
   } as any,
 })
 
-const getPlayerInfo = async () => {
+const getPlayersInfo = async () => {
   if (!activeBattle.value || !avaxContract.value) return
 
   try {
@@ -43,7 +42,7 @@ const getPlayerInfo = async () => {
 
     if (
       activeBattle.value.players[0].toLowerCase() ===
-      walletAddress.value.toLowerCase()
+      currentAccountAddress.value.toLowerCase()
     ) {
       player01Address = activeBattle.value.players[0]
       player02Address = activeBattle.value.players[1]
@@ -80,7 +79,7 @@ const getPlayerInfo = async () => {
     }
   } catch (error) {
     console.error(error)
-    setErrorMessage(<WalletError>error)
+    setErrorMessage(error)
   }
 }
 
@@ -96,14 +95,14 @@ const makeAMove = async (choice: number) => {
       message: `Initiating ${choice === 1 ? 'attack' : 'defense'}`,
     })
   } catch (error) {
-    setErrorMessage(<WalletError>error)
+    setErrorMessage(error)
   }
 }
 
 const attackMove = () => makeAMove(1)
 const defenseMove = () => makeAMove(2)
 
-watch([avaxContract, activeBattle, props], getPlayerInfo, {
+watch([avaxContract, activeBattle, props], getPlayersInfo, {
   immediate: true,
 })
 
@@ -119,6 +118,13 @@ onMounted(() => {
 
 // onUnmounted(unwatchChanges)
 </script>
+
+<route lang="yaml">
+meta:
+  requiresAuth: true
+  layout: avax-battle
+</route>
+
 
 <template>
   <div class="flex-between game-container bg-cover" :class="battleground.id">
@@ -163,8 +169,3 @@ onMounted(() => {
     <GameInfo />
   </div>
 </template>
-
-<route lang="yaml">
-meta:
-  layout: avax-battle
-</route>

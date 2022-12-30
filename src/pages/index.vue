@@ -1,36 +1,27 @@
 <script setup lang="ts">
+import { invoke } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
-import { type WalletError } from '~/utils/error-message'
 const router = useRouter()
 
-const { avaxContract, walletAddress } = storeToRefs(useWeb3Store())
+const {
+  avaxContract,
+  currentAccountAddress,
+  isConnectedToContract,
+  currentPlayerInfo,
+} = storeToRefs(useWeb3Store())
 const { setAlertInfo, setErrorMessage } = useAlertInfoStore()
 
 const playerName = ref('')
 
-const playerExists = computedAsync<boolean>(async () => {
-  return avaxContract.value?.isPlayer(walletAddress.value) || false
+const playerExists = computedAsync(async () => {
+  return (
+    (await avaxContract.value?.isPlayer(currentAccountAddress.value))
+  )
 }, false)
-
-const playerTokenExists = computedAsync<boolean>(async () => {
-  return (await avaxContract.value?.isPlayerToken(walletAddress.value)) || false
-}, false)
-
-// watch(avaxContract, () => {
-//   createEventListeners({
-//     contract: avaxContract.value as AVAXGods,
-//     provider: provider.value!,
-//     setShowAlertInfo: setAlertInfo,
-//     walletAddress: walletAddress.value,
-//   })
-// })
 
 const handleClick = async () => {
   try {
-    // const playerExists = await avaxContract.value?.isPlayer(walletAddress.value)
-
     if (!playerExists.value) {
-      console.info('Creating new player...')
       // Create a new player
       await avaxContract.value?.registerPlayer(
         playerName.value,
@@ -43,35 +34,34 @@ const handleClick = async () => {
         message: `${playerName.value} is being summoned!`,
       })
     } else {
-      console.info('Player exists ')
+      setAlertInfo({
+        status: true,
+        type: 'info',
+        message: `${playerName.value} already exists!`,
+      })
     }
   } catch (error) {
-    setErrorMessage(<WalletError>error)
+    setErrorMessage(error)
   }
 }
 
-const checkForPlayerToken = () => {
-  if (playerExists.value && playerTokenExists.value) {
-    setAlertInfo({
-      status: true,
-      type: 'info',
-      message: 'You are ready to Battle!',
-    })
+invoke(async () => {
+  await until(currentPlayerInfo).toBeTruthy()
 
-    // unwatchPlayerCreated()
+  setAlertInfo({
+    status: true,
+    type: 'info',
+    message: 'You are ready to Battle!',
+  })
 
-    router.push('/create-battle')
-  } else {
-    setAlertInfo({
-      status: true,
-      type: 'failure',
-      message: 'You must first create a player',
-    })
-  }
-}
-
-watch([playerExists, playerTokenExists], checkForPlayerToken)
+  router.push('/create-battle')
+})
 </script>
+
+<route lang="yaml">
+meta:
+  layout: avax
+</route>
 
 <template>
   <div>
@@ -86,12 +76,8 @@ watch([playerExists, playerTokenExists], checkForPlayerToken)
     <CustomButton
       title="Register"
       rest-styles="mt-6"
+      :is-enabled="isConnectedToContract"
       @handle-click="handleClick"
     />
   </div>
 </template>
-
-<route lang="yaml">
-meta:
-  layout: avax
-</route>

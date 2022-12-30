@@ -23,12 +23,16 @@ const layoutDescription = computed(
     <AlertInfo />
 
     <div class="hoc-content-box">
-      <img
-        src="/resources/logo.svg"
-        alt="logo"
-        class="hoc-logo"
-        @click="router.push('/')"
-      />
+      <div class="flex flex-row justify-between items-center">
+        <img
+          src="/resources/logo.svg"
+          alt="logo"
+          class="hoc-logo"
+          @click="router.push('/')"
+        />
+
+        <CurrentPlayerInfo />
+      </div>
 
       <div class="hoc-body-wrapper">
         <div class="flex flex-row w-full">

@@ -1,3 +1,5 @@
+import 'vue-router'
+
 declare interface Window {
   ethereum?: import('ethers').providers.ExternalProvider & {
     chainId: string
@@ -16,4 +18,13 @@ declare module '*.vue' {
   import { type DefineComponent } from 'vue'
   const component: DefineComponent<{}, {}, any>
   export default component
+}
+
+declare module 'vue-router' {
+  interface RouteMeta {
+    layout?: string
+    layoutTitle?: string[]
+    layoutDescription?: string
+    requiresAuth?: boolean
+  }
 }
