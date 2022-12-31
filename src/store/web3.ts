@@ -3,7 +3,7 @@ import { acceptHMRUpdate, defineStore } from 'pinia'
 import Web3Modal from 'web3modal'
 import { AVAXGods__factory, type AVAXGods } from '~/contract/types'
 
-export const useWeb3StoreNoHooks = defineStore('web3', () => {
+export const useWeb3Store = defineStore('web3', () => {
   const { setErrorMessage } = useAlertInfoStore()
 
   const currentAccountAddress = ref('')
@@ -11,17 +11,23 @@ export const useWeb3StoreNoHooks = defineStore('web3', () => {
   const provider = ref<ethers.providers.Web3Provider>()
   const avaxContract = ref<AVAXGods>()
 
+  const playerInfoUpdates = ref(1)
+
+  const updatePlayerInfo = () => playerInfoUpdates.value++
+
   const isConnectedToContract = computed(() => Boolean(avaxContract.value))
 
   const currentPlayerInfo = computedAsync(async () => {
     if (
+      // To force recalculation of player info
+      playerInfoUpdates.value &&
       currentAccountAddress.value &&
       avaxContract.value &&
       (await avaxContract.value.isPlayer(currentAccountAddress.value))
     ) {
       return avaxContract.value?.getPlayer(currentAccountAddress.value)
     }
-  })
+  }, null)
 
   const setAccountBalance = (newBalance: number) => {
     currentAccountBalance.value = newBalance
@@ -58,6 +64,7 @@ export const useWeb3StoreNoHooks = defineStore('web3', () => {
   }
 
   return {
+    updatePlayerInfo,
     isConnectedToContract,
     avaxContract,
     provider,
@@ -70,31 +77,6 @@ export const useWeb3StoreNoHooks = defineStore('web3', () => {
   }
 })
 
-export const useWeb3Store = () => {
-  const { setErrorMessage } = useAlertInfoStore()
-  const web3NoHooksStore = useWeb3StoreNoHooks()
-  const { setSmartContractAndProvider, updateCurrentAccountAddress } =
-    web3NoHooksStore
-
-  const initialize = async () => {
-    await setSmartContractAndProvider()
-    await updateCurrentAccountAddress()
-  }
-
-  onMounted(async () => {
-    try {
-      await initialize()
-    } catch (error) {
-      setErrorMessage(error)
-    }
-
-    window.ethereum?.on('accountsChanged', initialize)
-    window.ethereum?.on('chainChanged', initialize)
-  })
-
-  return web3NoHooksStore
-}
-
 if (import.meta.hot) {
-  import.meta.hot.accept(acceptHMRUpdate(useWeb3StoreNoHooks, import.meta.hot))
+  import.meta.hot.accept(acceptHMRUpdate(useWeb3Store, import.meta.hot))
 }

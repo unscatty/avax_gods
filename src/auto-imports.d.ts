@@ -273,8 +273,8 @@ declare global {
   const useVibrate: typeof import('@vueuse/core')['useVibrate']
   const useVirtualList: typeof import('@vueuse/core')['useVirtualList']
   const useWakeLock: typeof import('@vueuse/core')['useWakeLock']
+  const useWeb3: typeof import('./composables/web3')['useWeb3']
   const useWeb3Store: typeof import('./store/web3')['useWeb3Store']
-  const useWeb3StoreNoHooks: typeof import('./store/web3')['useWeb3StoreNoHooks']
   const useWebNotification: typeof import('@vueuse/core')['useWebNotification']
   const useWebSocket: typeof import('@vueuse/core')['useWebSocket']
   const useWebWorker: typeof import('@vueuse/core')['useWebWorker']
@@ -573,8 +573,8 @@ declare module 'vue' {
     readonly useVibrate: UnwrapRef<typeof import('@vueuse/core')['useVibrate']>
     readonly useVirtualList: UnwrapRef<typeof import('@vueuse/core')['useVirtualList']>
     readonly useWakeLock: UnwrapRef<typeof import('@vueuse/core')['useWakeLock']>
+    readonly useWeb3: UnwrapRef<typeof import('./composables/web3')['useWeb3']>
     readonly useWeb3Store: UnwrapRef<typeof import('./store/web3')['useWeb3Store']>
-    readonly useWeb3StoreNoHooks: UnwrapRef<typeof import('./store/web3')['useWeb3StoreNoHooks']>
     readonly useWebNotification: UnwrapRef<typeof import('@vueuse/core')['useWebNotification']>
     readonly useWebSocket: UnwrapRef<typeof import('@vueuse/core')['useWebSocket']>
     readonly useWebWorker: UnwrapRef<typeof import('@vueuse/core')['useWebWorker']>
