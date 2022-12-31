@@ -4,7 +4,7 @@ export const install: UserModule = ({ isClient, router }) => {
   if (isClient) {
     router.beforeEach((to, _, next) => {
       const { setAlertInfo } = useAlertInfoStore()
-      const { currentPlayerInfo } = storeToRefs(useWeb3StoreNoHooks())
+      const { currentPlayerInfo } = storeToRefs(useWeb3Store())
 
       const requiresAuth = to.meta?.requiresAuth
 

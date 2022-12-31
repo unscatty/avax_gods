@@ -14,9 +14,7 @@ const { setAlertInfo, setErrorMessage } = useAlertInfoStore()
 const playerName = ref('')
 
 const playerExists = computedAsync(async () => {
-  return (
-    (await avaxContract.value?.isPlayer(currentAccountAddress.value))
-  )
+  return await avaxContract.value?.isPlayer(currentAccountAddress.value)
 }, false)
 
 const handleClick = async () => {

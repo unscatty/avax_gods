@@ -197,5 +197,8 @@ export default defineConfig({
     'bg-panight',
     'bg-hero-img',
     'bg-landing',
+    'info',
+    'success',
+    'failure',
   ],
 })

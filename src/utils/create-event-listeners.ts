@@ -52,6 +52,7 @@ export const createEventListeners = ({
   player1Ref,
   player2Ref,
   setUpdateGameData,
+  updatePlayerInfo,
 }: {
   router: Router
   contract: AVAXGods
@@ -61,11 +62,14 @@ export const createEventListeners = ({
   player1Ref?: HTMLElement
   player2Ref?: HTMLElement
   setUpdateGameData: ReturnType<typeof useBattleStore>['setUpdateGameData']
+  updatePlayerInfo: ReturnType<typeof useWeb3Store>['updatePlayerInfo']
 }) => {
   if (contract) {
     const newPlayerEventFilter = contract.filters.NewPlayer()
     addNewEvent(newPlayerEventFilter, provider, ({ args }) => {
       console.log('New player created!', args)
+
+      updatePlayerInfo()
 
       if (currentAccountAddress === args.owner) {
         setAlertInfo({
@@ -87,6 +91,12 @@ export const createEventListeners = ({
         currentAccountAddress.toLowerCase() === player1.toLowerCase() ||
         currentAccountAddress.toLowerCase() === player2.toLowerCase()
       ) {
+        setAlertInfo({
+          status: true,
+          type: 'info',
+          message: `Battle ${args.battleName} has started!`,
+        })
+
         router.push(`/battle/${args.battleName}`)
       }
 
@@ -103,8 +113,6 @@ export const createEventListeners = ({
           type: 'success',
           message: 'Player game token has been successfully generated',
         })
-
-        // router.push('/create-battle')
       }
     })
 
@@ -137,7 +145,9 @@ export const createEventListeners = ({
     addNewEvent(battleEndedEventFilter, provider, ({ args }) => {
       if (currentAccountAddress.toLowerCase() === args.winner.toLowerCase()) {
         setAlertInfo({ status: true, type: 'success', message: 'You won!' })
-      } else if (currentAccountAddress.toLowerCase() === args.loser.toLowerCase()) {
+      } else if (
+        currentAccountAddress.toLowerCase() === args.loser.toLowerCase()
+      ) {
         setAlertInfo({ status: true, type: 'failure', message: 'You lost!' })
       }
 

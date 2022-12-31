@@ -1,6 +1,8 @@
 <script setup lang="ts">
 useEventListeners()
 
+useWeb3()
+
 const router = useRouter()
 const meta = computed(() => router.currentRoute.value.meta)
 
