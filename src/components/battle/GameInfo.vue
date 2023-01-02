@@ -1,4 +1,8 @@
 <script setup lang="ts">
+const { avaxContract } = storeToRefs(useWeb3Store())
+const { activeBattle } = storeToRefs(useBattleStore())
+const { setAlertInfo, setErrorMessage } = useAlertInfoStore()
+
 const gameRules = [
   'Card with the same defense and attack point will cancel each other out.',
   "Attack points from the attacking card will deduct the opposing player's health points.",
@@ -12,7 +16,22 @@ const router = useRouter()
 
 const toogleSidebar = ref(false)
 
-const handleBattleExit = async () => {}
+const handleBattleExit = async () => {
+  try {
+    const battleName = activeBattle.value?.name
+    if (battleName) {
+      await avaxContract.value?.quitBattle(battleName)
+
+      setAlertInfo({
+        status: true,
+        type: 'info',
+        message: `You're quitting the ${battleName} battle`,
+      })
+    }
+  } catch (error) {
+    setErrorMessage(error)
+  }
+}
 </script>
 
 <template>

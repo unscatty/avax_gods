@@ -87,7 +87,9 @@ const makeAMove = async (choice: number) => {
   playAudio(choice === 1 ? attackSound : defenseSound)
 
   try {
-    await avaxContract.value?.attackOrDefendChoice(choice, props.battleName)
+    await avaxContract.value?.attackOrDefendChoice(choice, props.battleName, {
+      gasLimit: 200_000,
+    })
 
     setAlertInfo({
       status: true,
@@ -124,7 +126,6 @@ meta:
   requiresAuth: true
   layout: avax-battle
 </route>
-
 
 <template>
   <div class="flex-between game-container bg-cover" :class="battleground.id">
