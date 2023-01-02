@@ -240,7 +240,6 @@
     "useSpeechRecognition": true,
     "useSpeechSynthesis": true,
     "useState": true,
-    "useStepStore": true,
     "useStepper": true,
     "useStorage": true,
     "useStorageAsync": true,

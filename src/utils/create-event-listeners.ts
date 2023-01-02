@@ -21,8 +21,6 @@ const addNewEvent = (
 
     cb(parsedLog)
   })
-
-  // console.info(`Event created for ${eventFilter.topics?.join(',')}`)
 }
 
 const getCoordinates = (element?: HTMLElement) => {

@@ -9,8 +9,6 @@ export const useWeb3 = () => {
     web3NoHooksStore
 
   const initialize = async () => {
-    console.info('holi')
-
     try {
       await setSmartContractAndProvider()
       await updateCurrentAccountAddress()
@@ -18,12 +16,6 @@ export const useWeb3 = () => {
       setErrorMessage(error)
     }
 
-    // await invoke(
-    //   async () =>
-    //     await until(currentPlayerInfo).toMatch((v) => Boolean(v), {
-    //       timeout: 1_000,
-    //     })
-    //     )
     await until(currentPlayerInfo).toMatch((v) => Boolean(v), {
       timeout: 1_000,
     })
@@ -43,11 +35,11 @@ export const useWeb3 = () => {
   }
 
   onMounted(async () => {
-    // try {
-    await initialize()
-    // } catch (error) {
-    //   setErrorMessage(error)
-    // }
+    try {
+      await initialize()
+    } catch (error) {
+      setErrorMessage(error)
+    }
 
     window.ethereum?.on('accountsChanged', initialize)
     window.ethereum?.on('chainChanged', initialize)

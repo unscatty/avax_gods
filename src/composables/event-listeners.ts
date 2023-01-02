@@ -10,15 +10,12 @@ export const useEventListeners = () => {
   const { updatePlayerInfo } = web3Store
 
   const { setAlertInfo } = useAlertInfoStore()
-  // const { step } = storeToRefs(useStepStore())
 
   const battleStore = useBattleStore()
   const { setUpdateGameData } = battleStore
   const { player1Ref, player2Ref } = storeToRefs(battleStore)
 
   const createEventListeners = () => {
-    console.info('createEventListeners')
-    
     if (avaxContract && avaxContract.value) {
       _createEventListeners({
         router,
