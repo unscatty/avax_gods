@@ -16,7 +16,7 @@ export const useBattleStore = defineStore('battle', () => {
 
   const [updateGameData, setUpdateGameData] = useState(0)
 
-  const unwatchContract = watch(
+  watch(
     [avaxContract, updateGameData],
     async () => {
       try {
@@ -48,8 +48,6 @@ export const useBattleStore = defineStore('battle', () => {
     },
     { immediate: true }
   )
-
-  onUnmounted(unwatchContract)
 
   return {
     players,

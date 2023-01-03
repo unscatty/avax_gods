@@ -26,5 +26,6 @@ declare module 'vue-router' {
     layoutTitle?: string[]
     layoutDescription?: string
     requiresAuth?: boolean
+    requiresActiveBattle?: boolean
   }
 }

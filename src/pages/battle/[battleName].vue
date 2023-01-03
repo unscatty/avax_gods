@@ -34,7 +34,16 @@ const player2 = ref<PlayerData>({
 })
 
 const getPlayersInfo = async () => {
-  if (!activeBattle.value || !avaxContract.value) return
+  if (
+    !activeBattle.value ||
+    activeBattle.value.players.some(
+      (address) =>
+        address.toLowerCase() ===
+        import.meta.env.VITE_EMPTY_ACCOUNT_VALUE.toLowerCase()
+    ) ||
+    !avaxContract.value
+  )
+    return
 
   try {
     let player01Address: string
@@ -92,7 +101,6 @@ const makeAMove = async (choice: number) => {
     })
 
     setAlertInfo({
-      status: true,
       type: 'info',
       message: `Initiating ${choice === 1 ? 'attack' : 'defense'}`,
     })
@@ -101,28 +109,40 @@ const makeAMove = async (choice: number) => {
   }
 }
 
-const attackMove = () => makeAMove(1)
+const attackMove = () => {
+  const currentPlayerMana = player1.value.mana
+
+  if (currentPlayerMana < 3) {
+    setAlertInfo({
+      type: 'failure',
+      message: [
+        'You need at least 3 mana to attack.',
+        `You have ${currentPlayerMana} mana.`,
+        'Make a defense move to restore your mana',
+      ],
+      timeout: 5_000,
+    })
+
+    return
+  }
+
+  makeAMove(1)
+}
 const defenseMove = () => makeAMove(2)
 
 watch([avaxContract, activeBattle, props], getPlayersInfo, {
   immediate: true,
 })
 
-onMounted(() => {
-  const timer = setTimeout(() => {
-    if (!activeBattle.value) {
-      router.push('/')
-
-      clearTimeout(timer)
-    }
-  }, 2_000)
+useHead({
+  title: `Fighting ${props.battleName}`,
 })
-
-// onUnmounted(unwatchChanges)
+// })
 </script>
 
 <route lang="yaml">
 meta:
+  requiresActiveBattle: true
   requiresAuth: true
   layout: avax-battle
 </route>
