@@ -12,7 +12,6 @@ const handleBattleGroundChoice = (ground: BattlegroundChoice) => {
   battlegroundStore.battleground = ground
 
   setAlertInfo({
-    status: true,
     type: 'info',
     message: `${ground.name} is battle ready!`,
   })

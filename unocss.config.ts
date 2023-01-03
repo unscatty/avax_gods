@@ -126,7 +126,7 @@ export default defineConfig({
         'text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800',
       'alert-container': 'absolute z-10 top-5 left-0 right-0',
       'alert-wrapper': 'p-4 rounded-lg font-rajdhani font-semibold text-lg ',
-      'alert-icon': 'flex-shrink-0 inline w-6 h-6 mr-2',
+      'alert-icon': 'flex-shrink-0 inline w-6 h-6',
 
       // modal
       'modal-text':

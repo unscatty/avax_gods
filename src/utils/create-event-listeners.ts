@@ -39,8 +39,6 @@ const getCoordinates = (element?: HTMLElement) => {
   }
 }
 
-const emptyAccount = '0x0000000000000000000000000000000000000000'
-
 export const createEventListeners = ({
   router,
   contract,
@@ -71,7 +69,6 @@ export const createEventListeners = ({
 
       if (currentAccountAddress === args.owner) {
         setAlertInfo({
-          status: true,
           type: 'success',
           message: 'Player has been successfully registered',
         })
@@ -90,9 +87,8 @@ export const createEventListeners = ({
         currentAccountAddress.toLowerCase() === player2.toLowerCase()
       ) {
         setAlertInfo({
-          status: true,
           type: 'info',
-          message: `Battle ${args.battleName} has started!`,
+          message: `Battle "${args.battleName}" has started!`,
         })
 
         router.push(`/battle/${args.battleName}`)
@@ -107,7 +103,6 @@ export const createEventListeners = ({
 
       if (currentAccountAddress.toLowerCase() === args.owner.toLowerCase()) {
         setAlertInfo({
-          status: true,
           type: 'success',
           message: 'Player game token has been successfully generated',
         })
@@ -124,7 +119,9 @@ export const createEventListeners = ({
       console.log('Round ended!', args, currentAccountAddress)
 
       for (let i = 0; i < args.damagedPlayers.length; i += 1) {
-        if (args.damagedPlayers[i] !== emptyAccount) {
+        if (
+          args.damagedPlayers[i] !== import.meta.env.VITE_EMPTY_ACCOUNT_VALUE
+        ) {
           if (args.damagedPlayers[i] === currentAccountAddress) {
             sparcle(getCoordinates(player1Ref))
           } else if (args.damagedPlayers[i] !== currentAccountAddress) {
@@ -136,17 +133,30 @@ export const createEventListeners = ({
       }
 
       setUpdateGameData((prevUpdateGameData) => prevUpdateGameData + 1)
+
+      setAlertInfo({
+        type: 'info',
+        message: ['Round is over', 'Waiting for next moves...'],
+      })
     })
 
     // Battle Ended event listener
     const battleEndedEventFilter = contract.filters.BattleEnded()
     addNewEvent(battleEndedEventFilter, provider, ({ args }) => {
+      const battleOverMessage = 'Battle is over!'
+
       if (currentAccountAddress.toLowerCase() === args.winner.toLowerCase()) {
-        setAlertInfo({ status: true, type: 'success', message: 'You won!' })
+        setAlertInfo({
+          type: 'success',
+          message: [battleOverMessage, 'You won!'],
+        })
       } else if (
         currentAccountAddress.toLowerCase() === args.loser.toLowerCase()
       ) {
-        setAlertInfo({ status: true, type: 'failure', message: 'You lost!' })
+        setAlertInfo({
+          type: 'failure',
+          message: [battleOverMessage, 'You lost!'],
+        })
       }
 
       router.push('/create-battle')

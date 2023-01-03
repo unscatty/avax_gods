@@ -27,13 +27,11 @@ const handleClick = async () => {
       )
 
       setAlertInfo({
-        status: true,
         type: 'info',
         message: `${playerName.value} is being summoned!`,
       })
     } else {
       setAlertInfo({
-        status: true,
         type: 'info',
         message: `${playerName.value} already exists!`,
       })
@@ -47,7 +45,6 @@ invoke(async () => {
   await until(currentPlayerInfo).toMatch((v) => Boolean(v))
 
   setAlertInfo({
-    status: true,
     type: 'info',
     message: 'You are ready to Battle!',
   })

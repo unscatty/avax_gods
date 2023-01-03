@@ -23,7 +23,6 @@ const handleBattleExit = async () => {
       await avaxContract.value?.quitBattle(battleName)
 
       setAlertInfo({
-        status: true,
         type: 'info',
         message: `You're quitting the ${battleName} battle`,
       })
@@ -35,13 +34,9 @@ const handleBattleExit = async () => {
 </script>
 
 <template>
-  <div class="game-info-icon-box">
+  <div class="game-info-icon-box scale-125">
     <div class="game-info-icon flex-center" @click="toogleSidebar = true">
-      <img
-        src="/resources/alertIcon.svg"
-        alt="info"
-        class="game-info-icon-img"
-      />
+      <AlertIcon type="text-white" />
     </div>
   </div>
 

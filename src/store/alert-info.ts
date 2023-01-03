@@ -1,37 +1,61 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import { useState } from '~/composables/state'
 import { parseErrorMessage } from '~/utils/error-message'
 
 export const useAlertInfoStore = defineStore('alertInfo', () => {
-  const [alertInfo, setAlertInfo] = useState({
+  const alertInfo = ref({
     status: false,
     type: 'info',
-    message: '',
+    message: [''],
   })
 
+  const setAlertInfo = ({
+    type,
+    message,
+    timeout = 3_000,
+  }: {
+    type: string
+    message: string | string[]
+    timeout?: number
+  }) => {
+    const timer = setTimeout(() => {
+      // Clear alert info
+      clearAlertInfo()
+
+      clearTimeout(timer)
+    }, timeout)
+
+    if (typeof message === 'string') {
+      alertInfo.value = {
+        status: true,
+        type,
+        message: [message],
+      }
+
+      return
+    }
+
+    if (typeof message === 'object' && Array.isArray(message)) {
+      alertInfo.value = {
+        status: true,
+        type,
+        message,
+      }
+
+      return
+    }
+  }
+
   const clearAlertInfo = () =>
-    setAlertInfo({ status: false, type: 'info', message: '' })
+    (alertInfo.value = { status: false, type: 'info', message: [''] })
 
   const setErrorMessage = (error: any) =>
     setAlertInfo({
-      status: true,
       message: parseErrorMessage(error),
       type: 'failure',
     })
 
-  watch(alertInfo, () => {
-    if (alertInfo.value.status) {
-      const timer = setTimeout(() => {
-        // Clear alert info
-        clearAlertInfo()
-
-        clearTimeout(timer)
-      }, 5_000)
-    }
-  })
-
   return {
-    alertInfo,
+    alertInfo: readonly(alertInfo),
     setAlertInfo,
     setErrorMessage,
     clearAlertInfo,

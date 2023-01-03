@@ -10,9 +10,18 @@ const { clearAlertInfo } = alertStore
     class="alert-container flex-center cursor-pointer z-999"
     @click="clearAlertInfo"
   >
-    <div class="alert-wrapper" :class="alertInfo.type">
+    <div
+      class="alert-wrapper flex items-center justify-between"
+      :class="alertInfo.type"
+    >
       <AlertIcon :type="alertInfo.type" />
-      {{ alertInfo.message || 'Something went wrong :c' }}
+      <div class="flex flex-col">
+        <template v-for="(text, index) in alertInfo.message" :key="index">
+          <span>
+            {{ text || 'Something went wrong' }}
+          </span>
+        </template>
+      </div>
     </div>
   </div>
 </template>

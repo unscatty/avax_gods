@@ -28,7 +28,6 @@ export const install: UserModule = ({ isClient, router }) => {
         !(currentPlayerInfo && currentPlayerInfo.value?.playerName)
       ) {
         setAlertInfo({
-          status: true,
           message: 'You need to register first!',
           type: 'info',
         })
