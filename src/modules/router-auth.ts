@@ -40,6 +40,8 @@ export const install: UserModule = ({ isClient, router }) => {
       } else if (to.meta?.requiresActiveBattle) {
         await until(activeBattle).toMatch((v) => Boolean(v), { timeout: 1_500 })
 
+        const battleStatus = activeBattle.value?.battleStatus ?? -1
+
         if (
           !activeBattle.value ||
           activeBattle.value.name !== to.params.battleName
@@ -47,6 +49,13 @@ export const install: UserModule = ({ isClient, router }) => {
           setAlertInfo({
             type: 'failure',
             message: 'You are not in this battle',
+          })
+
+          next('/create-battle')
+        } else if (!(battleStatus === 0 || battleStatus === 1)) {
+          setAlertInfo({
+            type: 'failure',
+            message: 'This battle is over',
           })
 
           next('/create-battle')
