@@ -6,6 +6,10 @@ const { activeBattle } = storeToRefs(useBattleStore())
 const { setAlertInfo, setErrorMessage } = useAlertInfoStore()
 
 const onExitBattle = async () => {
+  const exit = confirm('You will lose this battle. Are your sure?')
+
+  if (!exit) return
+
   try {
     const battleName = activeBattle.value?.name
     if (battleName) {

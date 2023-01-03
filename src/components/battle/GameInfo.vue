@@ -17,6 +17,10 @@ const router = useRouter()
 const toogleSidebar = ref(false)
 
 const handleBattleExit = async () => {
+  const exit = confirm('You will lose this battle. Are your sure?')
+
+  if (!exit) return
+
   try {
     const battleName = activeBattle.value?.name
     if (battleName) {
