@@ -18,6 +18,7 @@ declare module '@vue/runtime-core' {
     GameLoad: typeof import('./components/GameLoad.vue')['default']
     HeroCharIcon: typeof import('./components/common/HeroCharIcon.vue')['default']
     OnBoard: typeof import('./components/OnBoard.vue')['default']
+    PendingBattle: typeof import('./components/battle/PendingBattle.vue')['default']
     PlayerInfo: typeof import('./components/battle/PlayerInfo.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
