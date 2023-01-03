@@ -3,10 +3,11 @@ export const useWeb3 = () => {
 
   const { setAlertInfo } = useAlertInfoStore()
   const { setErrorMessage } = useAlertInfoStore()
-  const web3NoHooksStore = useWeb3Store()
-  const { currentPlayerInfo } = storeToRefs(web3NoHooksStore)
+  const web3Store = useWeb3Store()
+  const { currentPlayerInfo, isConnectedToContract } =
+    storeToRefs(web3Store)
   const { setSmartContractAndProvider, updateCurrentAccountAddress } =
-    web3NoHooksStore
+    web3Store
 
   const initialize = async () => {
     try {
@@ -35,10 +36,12 @@ export const useWeb3 = () => {
   }
 
   onMounted(async () => {
-    try {
-      await initialize()
-    } catch (error) {
-      setErrorMessage(error)
+    if (!isConnectedToContract.value) {
+      try {
+        await initialize()
+      } catch (error) {
+        setErrorMessage(error)
+      }
     }
 
     window.ethereum?.on('accountsChanged', initialize)

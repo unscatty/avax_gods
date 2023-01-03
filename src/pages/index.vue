@@ -44,7 +44,7 @@ const handleClick = async () => {
 }
 
 invoke(async () => {
-  await until(currentPlayerInfo).toBeTruthy()
+  await until(currentPlayerInfo).toMatch((v) => Boolean(v))
 
   setAlertInfo({
     status: true,
