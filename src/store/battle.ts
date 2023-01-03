@@ -16,6 +16,17 @@ export const useBattleStore = defineStore('battle', () => {
 
   const [updateGameData, setUpdateGameData] = useState(0)
 
+  const hasPendingBattle = computed<boolean>(() => {
+    if (activeBattle.value) {
+      return (
+        activeBattle.value.battleStatus === 0 ||
+        activeBattle.value.battleStatus === 1
+      )
+    }
+
+    return false
+  })
+
   watch(
     [avaxContract, updateGameData],
     async () => {
@@ -53,6 +64,7 @@ export const useBattleStore = defineStore('battle', () => {
     players,
     pendingBattles,
     activeBattle,
+    hasPendingBattle,
 
     player1Ref,
     player2Ref,

@@ -3,14 +3,37 @@ import { storeToRefs } from 'pinia'
 
 const router = useRouter()
 const { currentAccountAddress } = storeToRefs(useWeb3Store())
-const formattedAddress = computed(() => currentAccountAddress.value.slice(0, 30))
 const { activeBattle } = storeToRefs(useBattleStore())
+
+const props = defineProps<{
+  isOpen: boolean
+}>()
+
+const emit = defineEmits<{
+  (e: 'update:isOpen', value: boolean): void
+}>()
+
+const isOpen = useVModel(props, 'isOpen', emit)
+
+const formattedAddress = computed(() =>
+  currentAccountAddress.value.slice(0, 30)
+)
 
 const unknownAddress = '?'.repeat(30)
 </script>
 
 <template>
   <div class="flex-between game-load-container gameload">
+    <div class="absolute left-6 top-6">
+      <div class="game-info-sidebar-close-box">
+        <div
+          class="flex-center game-info-sidebar-close"
+          @click="isOpen = false"
+        >
+          x
+        </div>
+      </div>
+    </div>
     <div class="game-load-btn-box">
       <CustomButton
         title="Choose Battleground"
@@ -21,7 +44,7 @@ const unknownAddress = '?'.repeat(30)
 
     <div class="flex flex-center flex-col">
       <h2 class="game-load-head-text text-center text-4xl">
-        {{ activeBattle?.name }}
+        Battle {{ activeBattle?.name }}
       </h2>
     </div>
 

@@ -2,11 +2,9 @@
 import { storeToRefs } from 'pinia'
 
 const router = useRouter()
-const { pendingBattles, activeBattle } = storeToRefs(useBattleStore())
+const { pendingBattles, hasPendingBattle } = storeToRefs(useBattleStore())
 const { currentAccountAddress, avaxContract } = storeToRefs(useWeb3Store())
 const { setAlertInfo, setErrorMessage } = useAlertInfoStore()
-
-const isInBattle = computed(() => Boolean(activeBattle.value))
 
 // Battles that were not created by the current player
 const availableBattles = computed(() =>
@@ -45,7 +43,7 @@ meta:
 </route>
 
 <template>
-  <PendingBattle v-if="isInBattle" />
+  <PendingBattle v-if="hasPendingBattle" />
 
   <template v-else>
     <h2 class="join-head-text">Available Battles:</h2>
