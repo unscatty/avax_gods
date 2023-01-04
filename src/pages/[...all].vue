@@ -1,14 +1,22 @@
 <script setup lang="ts">
-const { t } = useI18n()
+const router = useRouter()
 </script>
-
-<template>
-  <div>
-    {{ t('not-found') }}
-  </div>
-</template>
 
 <route lang="yaml">
 meta:
-  layout: 404
+  layout: avax
+  layoutTitle:
+    - Oops
+    - that's an error
+  layoutDescription: The page you are looking for does no exist
 </route>
+
+<template>
+  <div>
+    <h2 class="join-head-text">Here's what you can do</h2>
+    <div class="flex space-x-5">
+      <CustomButton title="Go back" @handle-click="router.back()" />
+      <CustomButton title="Go to homepage" @handle-click="router.push('/')" />
+    </div>
+  </div>
+</template>

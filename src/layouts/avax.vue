@@ -51,8 +51,6 @@ const layoutDescription = computed(
         </p>
         <RouterView />
       </div>
-
-      <p class="footer-text">Made with 💜</p>
     </div>
 
     <div class="flex flex-1">

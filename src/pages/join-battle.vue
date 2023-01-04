@@ -58,7 +58,6 @@ meta:
           <p class="join-battle-title">{{ index + 1 }}. {{ battle.name }}</p>
           <CustomButton
             title="Join"
-            rest-styles="''"
             @handle-click="handleClick(battle.name)"
           />
         </div>
