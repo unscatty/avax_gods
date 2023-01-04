@@ -8,14 +8,18 @@ useHead({
     { name: 'description', content: 'NFT multiplayer game' },
     {
       name: 'theme-color',
-      content: computed(() => isDark.value ? '#00aba9' : '#ffffff'),
+      content: computed(() => (isDark.value ? '#00aba9' : '#ffffff')),
     },
   ],
   link: [
     {
       rel: 'icon',
       type: 'image/svg+xml',
-      href: computed(() => preferredDark.value ? '/favicon-dark.svg' : '/favicon.svg'),
+      href: computed(
+        () =>
+          import.meta.env.BASE_URL +
+          (preferredDark.value ? 'favicon-dark.svg' : 'favicon.svg')
+      ),
     },
   ],
 })
