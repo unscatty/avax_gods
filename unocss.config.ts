@@ -27,7 +27,7 @@ export default defineConfig({
         'font-rajdhani font-medium text-lg text-site-violet cursor-pointer my-5',
 
       // glassmorphism
-      'glass-effect': 'bg-white backdrop-filter backdrop-blur-lg bg-opacity-10',
+      'glass-effect': 'bg-gray-2 backdrop-filter backdrop-blur-lg bg-opacity-10',
 
       // hoc page
       'hoc-container': 'min-h-screen flex xl:flex-row flex-col relative',
@@ -200,5 +200,6 @@ export default defineConfig({
     'info',
     'success',
     'failure',
+    'glass-effect',
   ],
 })
