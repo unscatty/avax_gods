@@ -25,10 +25,10 @@ jobs:
 
       - name: Create env file
         run: |
-          echo "${{ secrets.DEPLOY_ENV }}" > .env.production.local
+          echo "${{ secrets.DEPLOY_GH_PAGES_ENV }}" > .env.gh-pages.local
 
       - name: Build static site
-        run: pnpm run build
+        run: pnpm run build --mode gh-pages
 
       - name: Deploy to Github pages
         uses: crazy-max/ghaction-github-pages@v3.1.0
