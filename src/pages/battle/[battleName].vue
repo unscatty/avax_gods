@@ -3,10 +3,11 @@ import { storeToRefs } from 'pinia'
 import { PlayerData } from '~/components/battle/types/battle'
 import { playAudio } from '~/utils/animation'
 
-const attackSound = '/resources/sounds/attack.wav'
-const defenseSound = '/resources/sounds/defense.mp3'
+const baseURL = import.meta.env.BASE_URL
 
-const router = useRouter()
+const attackSound = `${baseURL}resources/sounds/attack.wav`
+const defenseSound = `${baseURL}resources/sounds/defense.mp3`
+
 const { setAlertInfo, setErrorMessage } = useAlertInfoStore()
 const { currentAccountAddress, avaxContract } = storeToRefs(useWeb3Store())
 const { activeBattle, player1Ref, player2Ref } = storeToRefs(useBattleStore())
@@ -151,7 +152,7 @@ meta:
   <div class="flex-between game-container bg-cover" :class="battleground.id">
     <PlayerInfo
       :player="player2"
-      player-icon="/resources/player02.png"
+      :player-icon="`${baseURL}resources/player02.png`"
       margin-top
     />
 
@@ -165,7 +166,7 @@ meta:
 
       <div class="flex items-center flex-row">
         <ActionButton
-          img-url="/resources/attack.png"
+          :img-url="`${baseURL}resources/attack.png`"
           rest-styles="mr-2 hover:border-yellow-400"
           @handle-click="attackMove"
         />
@@ -178,14 +179,17 @@ meta:
         />
 
         <ActionButton
-          img-url="/resources/defense.png"
+          :img-url="`${baseURL}resources/defense.png`"
           rest-styles="ml-6 hover:border-red-600"
           @handle-click="defenseMove"
         />
       </div>
     </div>
 
-    <PlayerInfo :player="player1" player-icon="/resources/player01.png" />
+    <PlayerInfo
+      :player="player1"
+      :player-icon="`${baseURL}resources/player01.png`"
+    />
 
     <GameInfo />
   </div>

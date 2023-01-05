@@ -7,25 +7,27 @@ export type BattlegroundChoice = {
 }
 
 export const useBattlegroundStore = defineStore('battleground', () => {
+  const baseURL = import.meta.env.BASE_URL
+  
   const availableBattlegrounds = markRaw<BattlegroundChoice[]>([
     {
       id: 'bg-saiman',
-      image: '/resources/background/saiman.jpg',
+      image: `${baseURL}resources/background/saiman.jpg`,
       name: 'Saiman',
     },
     {
       id: 'bg-astral',
-      image: '/resources/background/astral.jpg',
+      image: `${baseURL}resources/background/astral.jpg`,
       name: 'Astral',
     },
     {
       id: 'bg-eoaalien',
-      image: '/resources/background/eoaalien.jpg',
+      image: `${baseURL}resources/background/eoaalien.jpg`,
       name: 'Eoaalien',
     },
     {
       id: 'bg-panight',
-      image: '/resources/background/panight.jpg',
+      image: `${baseURL}resources/background/panight.jpg`,
       name: 'Panight',
     },
   ])

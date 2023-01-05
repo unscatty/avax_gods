@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 
+const baseURL = import.meta.env.BASE_URL
+
 const router = useRouter()
 const { currentAccountAddress } = storeToRefs(useWeb3Store())
 const { activeBattle } = storeToRefs(useBattleStore())
@@ -60,7 +62,7 @@ const unknownAddress = '?'.repeat(30)
       <div class="game-load-players-box">
         <div class="flex-center flex-col">
           <img
-            src="/resources/player01.png"
+            :src="`${baseURL}resources/player01.png`"
             alt="plery1logo"
             class="game-load-player-img"
           />
@@ -73,7 +75,7 @@ const unknownAddress = '?'.repeat(30)
 
         <div class="flex-center flex-col">
           <img
-            src="/resources/player02.png"
+            :src="`${baseURL}resources/player02.png`"
             alt="plery1logo"
             class="game-load-player-img"
           />
