@@ -31,7 +31,11 @@ jobs:
         run: pnpm run build --mode gh-pages
       
       - name: Create 404 page
-        run: cp dist/index.html dist/404.html
+        run: cp dist/.html dist/404.html
+
+      - name: Configure Jekyll
+        run: |
+          echo "${{ secrets.JEKYLL_CONFIG }}" > dist/_config.yml
 
       - name: Deploy to Github pages
         uses: crazy-max/ghaction-github-pages@v3.1.0

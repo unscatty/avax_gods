@@ -20,12 +20,10 @@ export default defineConfig(({ command, mode }) => {
   let base = '/'
 
   if (command === 'build' && mode === 'gh-pages') {
-    console.log('Building for gh-pages')
-
     const env = loadEnv(mode, process.cwd())
     base = env.VITE_REPO_NAME
 
-    console.log({ base })
+    console.log(`Base url is ${base}`)
   }
 
   return {
