@@ -9,8 +9,6 @@ import {
   transformerVariantGroup,
 } from 'unocss'
 
-const baseURL = import.meta.env.BASE_URL
-
 export default defineConfig({
   shortcuts: [
     // ['btn', 'px-4 py-1 rounded inline-block bg-teal-700 text-white cursor-pointer hover:bg-teal-800 disabled:cursor-default disabled:bg-gray-600 disabled:opacity-50'],
@@ -29,7 +27,8 @@ export default defineConfig({
         'font-rajdhani font-medium text-lg text-site-violet cursor-pointer my-5',
 
       // glassmorphism
-      'glass-effect': 'bg-gray-2 backdrop-filter backdrop-blur-lg bg-opacity-10',
+      'glass-effect':
+        'bg-gray-2 backdrop-filter backdrop-blur-lg bg-opacity-10',
 
       // hoc page
       'hoc-container': 'min-h-screen flex xl:flex-row flex-col relative',
@@ -138,27 +137,27 @@ export default defineConfig({
   rules: [
     [
       'bg-astral',
-      { 'background-image': `url("${baseURL}resources/background/astral.jpg")` },
+      { 'background-image': 'url("/resources/background/astral.jpg")' },
     ],
     [
       'bg-saiman',
-      { 'background-image': `url("${baseURL}resources/background/saiman.jpg")` },
+      { 'background-image': 'url("/resources/background/saiman.jpg")' },
     ],
     [
       'bg-eoaalien',
-      { 'background-image': `url("${baseURL}resources/background/eoaalien.jpg")` },
+      { 'background-image': 'url("/resources/background/eoaalien.jpg")' },
     ],
     [
       'bg-panight',
-      { 'background-image': `url("${baseURL}resources/background/panight.jpg")` },
+      { 'background-image': 'url("/resources/background/panight.jpg")' },
     ],
     [
       'bg-hero-img',
-      { 'background-image': `url("${baseURL}resources/background/hero-img.jpg")` },
+      { 'background-image': 'url("/resources/background/hero-img.jpg")' },
     ],
     [
       'bg-landing',
-      { 'background-image': `url("${baseURL}resources/background/landing.jpg")` },
+      { 'background-image': 'url("/resources/background/landing.jpg")' },
     ],
   ],
   theme: {
