@@ -1,4 +1,4 @@
-name: GitHub Actions CICD
+name: GitHub Pages CICD
 run-name: ${{ github.actor }} is deploying to GitHub Pages 🚀
 on:
   push:
@@ -16,17 +16,30 @@ jobs:
         with:
           node-version: 16.x
 
-      - name: Install pnpm and dependencies
+      - name: Install pnpm
         uses: pnpm/action-setup@v2
         id: pnpm-install
         with:
           version: 7
           run_install: true
+      
+      - name: Install deps
+        run: pnpm install
 
       - name: Create env file
         run: |
           echo "${{ secrets.DEPLOY_GH_PAGES_ENV }}" > .env.gh-pages.local
-
+        
+      - name: Change homepage in package.json
+        uses: maxgfr/github-change-json@main
+        with:
+          key: 'homepage'
+          value: '${{ secrets.HOMEPAGE }}'
+          path: package.json
+      
+      - name: Show package.json
+        run: cat package.json
+      
       - name: Build static site
         run: pnpm run build --mode gh-pages
       
