@@ -9,6 +9,8 @@ import {
   transformerVariantGroup,
 } from 'unocss'
 
+const baseURL = import.meta.env.BASE_URL
+
 export default defineConfig({
   shortcuts: [
     // ['btn', 'px-4 py-1 rounded inline-block bg-teal-700 text-white cursor-pointer hover:bg-teal-800 disabled:cursor-default disabled:bg-gray-600 disabled:opacity-50'],
@@ -136,27 +138,27 @@ export default defineConfig({
   rules: [
     [
       'bg-astral',
-      { 'background-image': 'url("/resources/background/astral.jpg")' },
+      { 'background-image': `url("${baseURL}resources/background/astral.jpg")` },
     ],
     [
       'bg-saiman',
-      { 'background-image': 'url("/resources/background/saiman.jpg")' },
+      { 'background-image': `url("${baseURL}resources/background/saiman.jpg")` },
     ],
     [
       'bg-eoaalien',
-      { 'background-image': 'url("/resources/background/eoaalien.jpg")' },
+      { 'background-image': `url("${baseURL}resources/background/eoaalien.jpg")` },
     ],
     [
       'bg-panight',
-      { 'background-image': 'url("/resources/background/panight.jpg")' },
+      { 'background-image': `url("${baseURL}resources/background/panight.jpg")` },
     ],
     [
       'bg-hero-img',
-      { 'background-image': 'url("/resources/background/hero-img.jpg")' },
+      { 'background-image': `url("${baseURL}resources/background/hero-img.jpg")` },
     ],
     [
       'bg-landing',
-      { 'background-image': 'url("/resources/background/landing.jpg")' },
+      { 'background-image': `url("${baseURL}resources/background/landing.jpg")` },
     ],
   ],
   theme: {

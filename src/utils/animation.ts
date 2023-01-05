@@ -109,7 +109,7 @@ function explodeGroup(
 
 export function sparcle(
   event: { pageX: number; pageY: number },
-  clipSrc = '/resources/sounds/explosion.mp3'
+  clipSrc = `${import.meta.env.BASE_URL}resources/sounds/explosion.mp3`
 ) {
   const explosions: HTMLElement[] = []
 

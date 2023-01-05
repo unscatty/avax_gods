@@ -7,7 +7,7 @@ import { ABI } from '~/contract'
 import { type AVAXGods } from '~/contract/types'
 import { playAudio, sparcle } from './animation'
 
-const defenseSound = '/resources/sounds/defense.mp3'
+const defenseSound = `${import.meta.env.BASE_URL}resources/sounds/defense.mp3`
 
 const addNewEvent = (
   eventFilter: EventFilter,

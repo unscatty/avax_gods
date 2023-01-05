@@ -3,6 +3,8 @@ useEventListeners()
 
 useWeb3()
 
+const baseURL = import.meta.env.BASE_URL
+
 const router = useRouter()
 const meta = computed(() => router.currentRoute.value.meta)
 
@@ -27,7 +29,7 @@ const layoutDescription = computed(
     <div class="hoc-content-box">
       <div class="flex flex-row justify-between items-center">
         <img
-          src="/resources/logo.svg"
+          :src="`${baseURL}resources/logo.svg`"
           alt="logo"
           class="hoc-logo"
           @click="router.push('/')"
@@ -55,7 +57,7 @@ const layoutDescription = computed(
 
     <div class="flex flex-1">
       <img
-        src="/resources/background/hero-img.jpg"
+        :src="`${baseURL}resources/background/hero-img.jpg`"
         alt="hero-img"
         class="w-full xl:h-full object-cover"
       />
