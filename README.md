@@ -1,217 +1,175 @@
-<p align='center'>
-  <img src='https://user-images.githubusercontent.com/11247099/154486817-f86b8f20-5463-4122-b6e9-930622e757f2.png' alt='Vitesse - Opinionated Vite Starter Template' width='600'/>
-</p>
+# Avax Gods
 
-<p align='center'>
-Mocking up web app with <b>Vitesse</b><sup><em>(speed)</em></sup><br>
-</p>
+A (kinda) realtime Web3 multiplayer card game.
 
-<br>
+This is my approach to the tutorial video made by JSMastery ["Build and Deploy an Online Multiplayer Web 3 NFT Card Game"](https://www.youtube.com/watch?v=C9ctoK4M9Bk) with a few changes:
 
-<p align='center'>
-<a href="https://vitesse.netlify.app/">Live Demo</a>
-</p>
+- **Vue instead of React** as the UI framework. I used Vue because I'm more experienced with it and the tools and ecosystem around it, also I feel more confident using it as well as more productive, and I like the concepts and the "Vue way" of doing things more than React.
+- **Typescript**. I used TS because it lets me add type safety to the code and components without getting in the way. Also getting autocompletion everywhere is pretty nice.
+- **Layouts instead of HOCs**. I used layouts to create reusable views instead od using Higher Order Components, because I like this approach better as it seems more elegant and concise, although HOCs are more flexible and customizable. Also, as I used [Vitesse](https://github.com/antfu/vitesse) as starter template, use of layouts is already present, so I didn't have to configure anything.
+- **File based routing**. Each `.vue` file inside the `src/pages` folder is taken as a page and generated as a route, so I don't have to do it manually, similar to Next or Nuxt frameworks. 
+Again, this functionality is already built into [Vitesse](https://github.com/antfu/vitesse) so I didn't have to take care of it.
+- **Pinia stores**. I used stores instead of the context API for React (Vue's equivalent is the Provide/Inject mechanism) because they let me share functionality and data (state) across multiple components, but they also allow me to put each piece of common functionality into a single store, thus making the code more organized and maintainable.
+- **UnoCSS instead of Tailwind**. [UnoCSS](https://uno.antfu.me/) is a utility CSS engine used as an alternative to Tailwind or Windi CSS with some advantages such as customization, speed, debug tools and presets. It also lets you use CSS icons using only classes and is easy to install and get started (no need to install PostCSS).
 
-<br>
+Also I added some more useful features to the site and development process:
 
-<p align='center'>
-<b>English</b> | <a href="https://github.com/antfu/vitesse/blob/main/README.zh-CN.md">简体中文</a>
-<!-- Contributors: Thanks for getting interested, however we DON'T accept new transitions to the README, thanks. -->
-</p>
+- **Route guards**. To prevent access to protected routes whe unauthenticated. So the user has to register in the game before he gets access to it. If he tries to access these routes without being authenticated, navigation is aborted and he is redirected to the registration page.
+- **CI/CD pipeline to GH pages**. When working in the development of the page, the deployment process is an important step to make the changes available to the world outside of localhost.
+To automate this process, I created a workflow using **Github Actions** to build and deploy the project to **Github Pages**. So, when pushing changes to the `main` branch of this repository, a new job is fired and the build and deployment process gets started.
 
-<br>
 
 
-## Features
+## How to get started
 
-- ⚡️ [Vue 3](https://github.com/vuejs/core), [Vite 3](https://github.com/vitejs/vite), [pnpm](https://pnpm.io/), [ESBuild](https://github.com/evanw/esbuild) - born with fastness
+First of all, you will need a Web3 wallet. [Core wallet](https://core.app/) is recommended but you can use any other, such as MetaMask.
 
-- 🗂 [File based routing](./src/pages)
+### Install Core Wallet
 
-- 📦 [Components auto importing](./src/components)
+For the purpose of this quickstart guide, Core will be used. You can get the Core extension at their [official page](https://core.app/) or from the [Chrome store](https://chrome.google.com/webstore/detail/core-crypto-nft-wallet-ex/agoakfejjabomempkjlepdflaleeobhb?hl=en-US).
 
-- 🍍 [State Management via Pinia](https://pinia.vuejs.org/)
+Once installed, this screen will show up:
 
-- 📑 [Layout system](./src/layouts)
+![](guide/assets/create_wallet.png)
 
-- 📲 [PWA](https://github.com/antfu/vite-plugin-pwa)
+Now, click on ***Create new Wallet***.
 
-- 🎨 [UnoCSS](https://github.com/antfu/unocss) - the instant on-demand atomic CSS engine
+**Read** and accept the ToU and Privacy Policy.
 
-- 😃 [Use icons from any icon sets with classes](https://github.com/antfu/unocss/tree/main/packages/preset-icons)
+Then, give a name to the wallet and create a password. Don't forget to check the ToU and Privacy Policy, and click ***Save***
 
-- 🌍 [I18n ready](./locales)
+![](guide/assets/Screenshot_2023-01-05_12-41-09.png)
 
-- 🔎 [Component Preview](https://github.com/johnsoncodehk/vite-plugin-vue-component-preview)
+Next, your recovery phrase. Copy it and store it in a safe place, as advised. You will need it for the next step. Why do you need a recovery phrase? You can read about [here](https://www.skiff.com/blog/wallet-recovery-phrase)
 
-- 🗒 [Markdown Support](https://github.com/antfu/vite-plugin-vue-markdown)
+![](guide/assets/Screenshot_2023-01-05_12-44-01.png)
 
-- 🔥 Use the [new `<script setup>` syntax](https://github.com/vuejs/rfcs/pull/227)
+After that, to make sure you have access to your recovery phrase, you will be asked for words that are present in it. Follow the hints and click ***Next***
 
-- 🤙🏻 [Reactivity Transform](https://vuejs.org/guide/extras/reactivity-transform.html) enabled
+![](guide/assets/Screenshot_2023-01-05_13-08-06.png)
 
-- 📥 [APIs auto importing](https://github.com/antfu/unplugin-auto-import) - use Composition API and others directly
+If everything is OK, you will get a message that wallet has been created.
 
-- 🖨 Static-site generation (SSG) via [vite-ssg](https://github.com/antfu/vite-ssg)
+![](guide/assets/Screenshot_2023-01-05_13-09-35.png)
 
-- 🦔 Critical CSS via [critters](https://github.com/GoogleChromeLabs/critters)
+You can pin the extension for easy access to it.
 
-- 🦾 TypeScript, of course
+If you click on the Core icon (that little owl) you should get something like this
 
-- ⚙️ Unit Testing with [Vitest](https://github.com/vitest-dev/vitest), E2E Testing with [Cypress](https://cypress.io/) on [GitHub Actions](https://github.com/features/actions)
+![](guide/assets/Screenshot_2023-01-05_13-12-28.png)
 
-- ☁️ Deploy on Netlify, zero-config
+Nice! You have created a new wallet and a new account address has been added to it.
 
-<br>
+That was tough, now you can continue with the next steps.
 
+### Switching to test network and grabbing tokens :ticket:
 
-## Pre-packed
+Now that you have a wallet and an account, go to the [main page of the DApp](https://unscatty.github.io/avax_gods/)
 
-### UI Frameworks
+You will be prompted to connect your wallet to this the site. Click ***Approve***
 
-- [UnoCSS](https://github.com/antfu/unocss) - The instant on-demand atomic CSS engine.
+![](guide/assets/Screenshot_2023-01-05_13-28-56.png)
 
-### Icons
+Once you have connected your wallet, you are prompted with this screen
 
-- [Iconify](https://iconify.design) - use icons from any icon sets [🔍Icônes](https://icones.netlify.app/)
-- [Pure CSS Icons via UnoCSS](https://github.com/antfu/unocss/tree/main/packages/preset-icons)
+![](guide/assets/switch_screen.png)
 
-### Plugins
+Don't panic. The contract for this DApp is deployed over the Avalanche Test network (C-chain). For you to be able to interact with it, you must be on the same network.
+But hey, don't worry, just click on ***Switch*** and the network will be added to Core for you.
 
-- [Vue Router](https://github.com/vuejs/router)
-  - [`vite-plugin-pages`](https://github.com/hannoeru/vite-plugin-pages) - file system based routing
-  - [`vite-plugin-vue-layouts`](https://github.com/JohnCampionJr/vite-plugin-vue-layouts) - layouts for pages
-- [Pinia](https://pinia.vuejs.org) - Intuitive, type safe, light and flexible Store for Vue using the composition api
-- [`unplugin-vue-components`](https://github.com/antfu/unplugin-vue-components) - components auto import
-- [`unplugin-auto-import`](https://github.com/antfu/unplugin-auto-import) - Directly use Vue Composition API and others without importing
-- [`unplugin-vue-macros`](https://github.com/sxzz/unplugin-vue-macros) - Explore and extend more macros and syntax sugar to Vue.
-- [`vite-plugin-pwa`](https://github.com/antfu/vite-plugin-pwa) - PWA
-- [`vite-plugin-vue-component-preview`](https://github.com/johnsoncodehk/vite-plugin-vue-component-preview) - Preview single component in VSCode
-- [`vite-plugin-vue-markdown`](https://github.com/antfu/vite-plugin-vue-markdown) - Markdown as components / components in Markdown
-  - [`markdown-it-shiki`](https://github.com/antfu/markdown-it-shiki) - [Shiki](https://github.com/shikijs/shiki) for syntax highlighting
-- [Vue I18n](https://github.com/intlify/vue-i18n-next) - Internationalization
-  - [`vite-plugin-vue-i18n`](https://github.com/intlify/bundle-tools/tree/main/packages/vite-plugin-vue-i18n) - Vite plugin for Vue I18n
-- [VueUse](https://github.com/antfu/vueuse) - collection of useful composition APIs
-- [`vite-ssg-sitemap`](https://github.com/jbaubree/vite-ssg-sitemap) - Sitemap generator
-- [`@vueuse/head`](https://github.com/vueuse/head) - manipulate document head reactively
+When you click on ***Switch*** you will be asked for permissions to switch to the *Fuji C-Chain* network. Click on ***Approve***
 
-### Coding Style
+![](guide/assets/Screenshot_2023-01-05_13-51-54.png)
 
-- Use Composition API with [`<script setup>` SFC syntax](https://github.com/vuejs/rfcs/pull/227)
-- [ESLint](https://eslint.org/) with [@antfu/eslint-config](https://github.com/antfu/eslint-config), single quotes, no semi.
+Now you're prompted with this screen
 
-### Dev tools
+![](guide/assets/grab_tokens_screen.png)
 
-- [TypeScript](https://www.typescriptlang.org/)
-- [Vitest](https://github.com/vitest-dev/vitest) - Unit testing powered by Vite
-- [Cypress](https://cypress.io/) - E2E testing
-- [pnpm](https://pnpm.js.org/) - fast, disk space efficient package manager
-- [`vite-ssg`](https://github.com/antfu/vite-ssg) - Static-site generation
-  - [critters](https://github.com/GoogleChromeLabs/critters) - Critical CSS
-- [Netlify](https://www.netlify.com/) - zero-config deployment
-- [VS Code Extensions](./.vscode/extensions.json)
-  - [Vite](https://marketplace.visualstudio.com/items?itemName=antfu.vite) - Fire up Vite server automatically
-  - [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) - Vue 3 `<script setup>` IDE support
-  - [Iconify IntelliSense](https://marketplace.visualstudio.com/items?itemName=antfu.iconify) - Icon inline display and autocomplete
-  - [i18n Ally](https://marketplace.visualstudio.com/items?itemName=lokalise.i18n-ally) - All in one i18n support
-  - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+What is going on? Well, to be able to interact with the network (any blockchain network), you need tokens, which are used as currency. Each network has its own currency, in the case of Avalanche they're called AVAX Tokens.
 
-## Variations
+You can get **test** tokens for your account from the Avalanche Faucet, so go grab some.
 
-As this template is strongly opinionated, the following provides a curated list for community-maintained variations with different preferences and feature sets. Check them out as well. PR to add yours is also welcome!
+Click on the button, and a new tab opens. There you need to type your account address, or you can connect to it using the ***Connect*** button. Also make sure the network is set to *Fuji C-Chain* and token is set to AVAX
 
-###### Official
+![](guide/assets/faucet_avalanche.png)
 
-- [vitesse-lite](https://github.com/antfu/vitesse-lite) - Lightweight version of Vitesse
-- [vitesse-nuxt3](https://github.com/antfu/vitesse-nuxt3) - Vitesse for Nuxt 3
-- [vitesse-nuxt-bridge](https://github.com/antfu/vitesse-nuxt-bridge) - Vitesse for Nuxt 2 with Bridge
-- [vitesse-webext](https://github.com/antfu/vitesse-webext) - WebExtension Vite starter template
+Click on ***Request 2 AVAX***. You should see a message that transaction was successful.
 
-###### Community
+Now you should see those tokens in your account balance now.
 
-- [vitesse-ssr-template](https://github.com/frandiox/vitesse-ssr-template) by [@frandiox](https://github.com/frandiox) - Vitesse with SSR
-- [vitespa](https://github.com/ctholho/vitespa) by [@ctholho](https://github.com/ctholho) - Like Vitesse but without SSG/SSR
-- [vitailse](https://github.com/zynth17/vitailse) by [@zynth17](https://github.com/zynth17) - Like Vitesse but with TailwindCSS
-- [vitesse-modernized-chrome-ext](https://github.com/xiaoluoboding/vitesse-modernized-chrome-ext) by [@xiaoluoboding](https://github.com/xiaoluoboding) - ⚡️ Modernized Chrome Extension Manifest V3 Vite Starter Template
-- [vitesse-stackter-clean-architect](https://github.com/shamscorner/vitesse-stackter-clean-architect) by [@shamscorner](https://github.com/shamscorner) - A modular clean architecture pattern in vitesse template
-- [vitesse-enterprise](https://github.com/FranciscoKloganB/vitesse-enterprise) by [@FranciscoKloganB](https://github.com/FranciscoKloganB) - Consistent coding styles regardless of team-size.
-- [vitecamp](https://github.com/nekobc1998923/vitecamp) by [@nekobc1998923](https://github.com/nekobc1998923) - Like Vitesse but without SSG/SSR/File based routing, includes Element Plus
-- [vitesse-lite-react](https://github.com/lxy-yz/vitesse-lite-react) by [@lxy-yz](https://github.com/lxy-yz) - vitesse-lite React fork
-- [vide](https://github.com/Nico-Mayer/vide) by [@nico-mayer](https://github.com/Nico-Mayer) - Vite superlight Beginner Starter Template
-- [vitesse-h5](https://github.com/YunYouJun/vitesse-h5) by [@YunYouJun](https://github.com/YunYouJun) - Vitesse for Mobile
-- [bat](https://github.com/olgam4/bat) by [@olgam4](https://github.com/olgam4) - Vitesse for SolidJS
+**Remember these tokens are not real. They're only usable in the Avalanche Test network and nowhere else. They're not real money**
 
-## Try it now!
+![](guide/assets/Screenshot_2023-01-05_21-24-15.png)
 
-> Vitesse requires Node >=14.18
+Go back to the page, the not enough tokens message should be gone, try reloading the page if not.
 
-### GitHub Template
+Your screen should now look like this.
 
-[Create a repo from this template on GitHub](https://github.com/antfu/vitesse/generate).
+![](guide/assets/rootpage.png)
 
-### Clone to local
+### Registration
 
-If you prefer to do it manually with the cleaner git history
+To be able to create and join battles, you need to register first. In the main page, enter a name in the text field, the click on ***Register***. You should be prompted with a request to execute a transaction. Click on ***Approve***
 
-```bash
-npx degit antfu/vitesse my-vitesse-app
-cd my-vitesse-app
-pnpm i # If you don't have pnpm installed, run: npm install -g pnpm
-```
+![](guide/assets/Screenshot_2023-01-05_21-44-13.png)
 
-## Checklist
+After the transaction get confirmed, you are taken to the **Create Battle page**. Your player name should be displayed instead of your account address.
 
-When you use this template, try follow the checklist to update your info properly
+![](guide/assets/create_battle_page.png)
 
-- [ ] Change the author name in `LICENSE`
-- [ ] Change the title in `App.vue`
-- [ ] Change the hostname in `vite.config.ts`
-- [ ] Change the favicon in `public`
-- [ ] Remove the `.github` folder which contains the funding info
-- [ ] Clean up the READMEs and remove routes
+### Create a battle :axe:
 
-And, enjoy :)
+On the **Create Battle page** you can create new battles (dah) to battle other players.
 
-## Usage
+To create a battle, give it a name and then click on ***Create battle*** and approve the transaction. You get this screen.
 
-### Development
+![](guide/assets/waiting_battle.png)
 
-Just run and visit http://localhost:3333
+While you wait for other player to join the battle, you can choose between 4 different battlegrounds by clicking the ***Choose Battleground*** button.
 
-```bash
-pnpm dev
-```
+![](guide/assets/battleground.png)
 
-### Build
+### Join a battle
 
-To build the App, run
+To join a battle you can go to the [**Join Battle page**](https://unscatty.github.io/avax_gods/join-battle), where you should see the battle we created in [Create a battle](#create-a-battle-axe).
+Click on ***Join*** and approve the transaction. Here I'm using a different account to simulate a second player joining a battle.
 
-```bash
-pnpm build
-```
+![](guide/assets/join_battle.png)
 
-And you will see the generated file in `dist` that ready to be served.
+Once the transaction is confirmed, both players will be redirected to the battle stage, here's where the action happens.
 
-### Deploy on Netlify
+![](guide/assets/battle_main.png)
 
-Go to [Netlify](https://app.netlify.com/start) and select your clone, `OK` along the way, and your App will be live in a minute.
+### Battling another player
 
-### Docker Production Build
+Now it is time for the real action.
 
-First, build the vitesse image by opening the terminal in the project's root directory.
+To fight another player, you can perform two actions. **Attack** (the crossed swords button) or **Defend** (the shield button). Both player start with 25 health points.
+The game is played by rounds. One round ends once every player has made a move. When a round is over, the status of the battle (players HP, mana, etc) gets updated.
 
-```bash
-docker buildx build . -t vitesse:latest
-```
+You can always read the game rules by clicking in the info button (the "i" on the right) during a battle.
 
-Run the image and specify port mapping with the `-p` flag.
+![](guide/assets/battle_rules.png)
 
-```bash
-docker run --rm -it -p 8080:80 vitesse:latest
-```
+To perform an attack move, click on the attack button, when a confirmation prompt is shown, approve the transaction. Defense move is pretty much the same.
 
-## Why
+You have to wait for your opponent to make their move before you can make another move.
 
-I have created several Vite apps recently. Setting the configs up is kinda the bottleneck for me to make the ideas simply come true within a very short time.
+To exit a battle, click on the info button, then click on ***Exit Battle*** and approve the transaction. You will need to confirm the action. Be aware that you will automatically lose the battle if you exit.
 
-So I made this starter template for myself to create apps more easily, along with some good practices that I have learned from making those apps. It's strongly opinionated, but feel free to tweak it or even maintain your own forks. [(see community maintained variation forks)](#variations)
+![](guide/assets/exit_battle_confirm.png)
+
+The battle ends when one of the players loses all his HP.
+
+![](guide/assets/won_battle.png)
+
+
+Well, that's pretty much it. Have fun.
+
+## Acknowledgments and tools used
+
+- JSMastery, for their outstanding [tutorial on this game]() and the awesome content they make
+- Vitesse, the starter template I used to scaffold this project
+- Pinia, awesome store management library for Vue
+- Vite, awesome build tool that makes frontend development a breeze
+
