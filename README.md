@@ -1,6 +1,6 @@
 <h1>Avax Gods</h1>
 
-A (kinda) realtime Web3 multiplayer card game.
+A (kinda) realtime Web3 multiplayer card game. [Go to site](https://unscatty.github.io/avax_gods)
 
 <h1>Table of contents</h1>
 
@@ -37,7 +37,8 @@ Also I added some more useful features to the site and development process:
 
 The backend part of this project, a HardHat project holding the smart contract and deployment configuration, can be found [here](https://github.com/unscatty/avax_gods_back)
 
-The app's site can be installed as a PWA in a mobile device, using Chrome, instructions can be found [here](https://support.google.com/chrome/answer/9658361?hl=en&co=GENIE.Platform%3DAndroid).
+The app's site can be installed as a PWA in a mobile device, using Chrome, instructions can be found [here](https://support.google.com/chrome/answer/9658361?hl=en&co=GENIE.Platform%3DDesktop).
+Unfortunately there is still no support (as fas as I know) for Metamask or other wallets for mobile browsers, but you can use the [Metamask Mobile browser](https://metamask.zendesk.com/hc/en-us/articles/6356387482523-How-to-use-the-MetaMask-Mobile-Browser) app when using a mobile device
 
 ## What I learned from making this project
 
